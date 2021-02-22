@@ -12,7 +12,7 @@
 
 <body>
     <nav>
-        <ul>Page d'accueil</ul>
+        <ul href="home.php">Page d'accueil</ul>
         <ul>Menu</ul>
         <ul>Connexion</ul>
         <ul>Page d'accueil</ul>
