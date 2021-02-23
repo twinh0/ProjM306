@@ -7,16 +7,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
     <link href="styles/style.css" rel="stylesheet">
-    <title>Document</title>
+    <title>Page d'accueil</title>
 </head>
 
 <body>
-    <nav>
-        <ul href="home.php">Page d'accueil</ul>
-        <ul>Menu</ul>
-        <ul>Connexion</ul>
-        <ul>Page d'accueil</ul>
-    </nav>
+    <div class="navigation">
+        <?php
+        include "nav.php";
+        ?>
+    </div>
 </body>
 
 </html>
