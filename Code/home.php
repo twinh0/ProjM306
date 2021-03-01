@@ -11,6 +11,9 @@
 </head>
 
 <body>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap');
+    </style>
     <div class="navigation">
         <?php
         include "nav.php";
@@ -26,16 +29,16 @@
             <div class="carousel-inner">
                 <div class="carousel-item active">
                     <div class="carousel-caption d-none d-md-block">
-                        <h1>Bienvenue chez <i>Restaurant Baratie</i></h1>
-                        <p>Da place 2b 4 ur food</p>
+                        <h1 style="font-family: 'Dancing Script', cursive; font-size: 3em;">Bienvenue chez <i>Restaurant Baratie</i></h1>
+                        <p style="font-family: 'Dancing Script', cursive; font-size: 1em;">Da place 2b 4 ur food</p>
                     </div>
                     <img src="./img/restaurant1.jpg" class="d-block w-100" alt="restaurant">
                 </div>
                 <div class="carousel-item">
                     <img src="./img/wine.jpg" class="d-block w-100" alt="vin">
                     <div class="carousel-caption d-none d-md-block position-absolute top-0 start-50 translate-middle-x col-10 col-sm-10 col-md-10">
-                        <h1>Notre cave à vin est l'endroit idéal pour se mettre une sombre mine</h1>
-                        <p>Da place 2b 4 ur food</p>
+                        <h1 style="font-family: 'Dancing Script', cursive; font-size: 3em;">Notre cave à vin est l'endroit idéal pour se mettre une sombre mine</h1>
+                        <p style="font-family: 'Dancing Script', cursive; font-size: 1em;">Da place 2b 4 ur food</p>
                     </div>
                 </div>
                 <div class="carousel-item">
@@ -54,7 +57,7 @@
     </div>
     <div id="contactForm">
         <?php
-            include 'formContact.php'
+        include 'formContact.php'
         ?>
     </div>
 
