@@ -15,10 +15,10 @@ if ($envoyer) {
 
     if ($prenom != null && $nom != null && $email != null && $message != null && $message != null) {
 
-        $content = "From: " . $prenom . ' ' . $nom . "\n Email: $email \n Message: $message";
-        $recipient = "iliya.srkhn@eduge.ch";
+        $content = "From: $prenom \n Email: $email \n Message: $message";
+        // $recipient =  /* admin email address */;
         $mailheader = "From: $email \r\n";
-        mail($recipient, $sujet, $content, $mailheader) or die("Une erreur est survenue");
+        mail($recipient, $sujet, $content, $mailheader); //or die("Une erreur est survenue");
         echo "Email envoyé";
     }
 }
