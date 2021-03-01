@@ -8,6 +8,11 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
     <link href="styles/style.css" rel="stylesheet">
     <title>Transaction</title>
+    <style>
+        a:hover{
+            text-decoration:none;
+        }
+    </style>
 </head>
 
 <body>
@@ -34,6 +39,9 @@
                                 </div>
                             </div>
                         </section>
+                        <a href="home.php" class="text-danger">
+                            <p class="text-danger text-center">Revenir à la page d'accueil</p>
+                        </a>
                     </section>
                 </section>
             </main>
