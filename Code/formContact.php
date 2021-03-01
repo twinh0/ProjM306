@@ -1,7 +1,5 @@
 <?php
 
-use function PHPSTORM_META\map;
-
 $prenom = filter_input(INPUT_POST, 'prenom', FILTER_SANITIZE_STRING);
 $nom = filter_input(INPUT_POST, 'nom', FILTER_SANITIZE_STRING);
 $email = filter_input(INPUT_POST, 'prenom', FILTER_SANITIZE_EMAIL);
@@ -12,15 +10,19 @@ $envoyer = filter_input(INPUT_POST, 'envoyer');
 
 //Script pour le formulaire de contact:
 
-if($prenom != null && $nom != null && $email != null && $message != null && $message != null ){
 
-    $content = "From: " . $prenom . ' ' . $nom . "\n Email: $email \n Message: $message";
-    $recipient = "iliya.srkhn@eduge.ch";
-    $mailheader = "From: $email \r\n";
-    mail($recipient, $sujet, $content, $mailheader) or die("Une erreur est survenue");
-    echo "Email envoyé";
+if ($envoyer) {
 
+    if ($prenom != null && $nom != null && $email != null && $message != null && $message != null) {
+
+        $content = "From: " . $prenom . ' ' . $nom . "\n Email: $email \n Message: $message";
+        $recipient = "iliya.srkhn@eduge.ch";
+        $mailheader = "From: $email \r\n";
+        mail($recipient, $sujet, $content, $mailheader) or die("Une erreur est survenue");
+        echo "Email envoyé";
+    }
 }
+
 
 
 ?>
@@ -95,14 +97,14 @@ if($prenom != null && $nom != null && $email != null && $message != null && $mes
                     </div>
                 </div>
                 <!--Grid row-->
+                <div class="text-center text-md-left">
+                    <br />
+                    <input type="submit" name="envoyer" class="btn btn-primary" value="Envoyer" />
+                    <!-- <a class="btn btn-primary" onclick="document.getElementById('contact-form').submit();">Send</a> -->
+                </div>
 
             </form>
 
-            <div class="text-center text-md-left">
-                <br/>
-                <input type="submit" name="envoyer" class="btn btn-primary" value="Envoyer"/>
-                <!-- <a class="btn btn-primary" onclick="document.getElementById('contact-form').submit();">Send</a> -->
-            </div>
             <div class="status"></div>
         </div>
         <!--Grid column-->
