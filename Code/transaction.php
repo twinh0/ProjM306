@@ -21,6 +21,7 @@
         include "nav.php";
         ?>
         <?php
+        // variable qui vérifie si la transaction est bonne
         $validOuNon = true;
         // vérification de la validation de la transaction (simulation)
         // Verification passée
@@ -50,7 +51,25 @@
         // Verification pas passée
         else {
         ?>
+            <main>
+                <section class="container-fluid jumbotron mt-5">
+                    <section class="row justify-content-center">
+                        <section class="col-6 col-sm-6 col-md-6 bg-dark text-white p-5 border border-dark rounded">
+                            <div class="container">
+                                <div id="quiz">
+                                    <h1 class="text-danger text-center">Paiement non effectué</h1>
 
+                                    <h4 class="text-center">Il y Votre eu un problème avec votre transaction. veuillez retenter .</h4>
+
+                                </div>
+                            </div>
+                        </section>
+                        <a href="home.php" class="text-success">
+                            <p class="text-success text-center">Revenir à la page d'accueil</p>
+                        </a>
+                    </section>
+                </section>
+            </main>
         <?php
         }
         ?>
