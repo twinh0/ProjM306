@@ -9,8 +9,8 @@
     <link href="styles/style.css" rel="stylesheet">
     <title>Transaction</title>
     <style>
-        a:hover{
-            text-decoration:none;
+        a:hover {
+            text-decoration: none;
         }
     </style>
 </head>
@@ -27,7 +27,7 @@
         // Verification passée
         if ($validOuNon == true) {
         ?>
-            <main>
+            <main class="popUpTransaction">
                 <section class="container-fluid jumbotron mt-5">
                     <section class="row justify-content-center">
                         <section class="col-6 col-sm-6 col-md-6 bg-dark text-white p-5 border border-dark rounded">
@@ -51,7 +51,7 @@
         // Verification pas passée
         else {
         ?>
-            <main>
+            <main class="popUpTransaction">
                 <section class="container-fluid jumbotron mt-5">
                     <section class="row justify-content-center">
                         <section class="col-6 col-sm-6 col-md-6 bg-dark text-white p-5 border border-dark rounded">
@@ -59,7 +59,7 @@
                                 <div id="quiz">
                                     <h1 class="text-danger text-center">Paiement non effectué</h1>
 
-                                    <h4 class="text-center">Il y Votre eu un problème avec votre transaction. veuillez retenter .</h4>
+                                    <h4 class="text-center">Il y a eu un problème avec votre transaction. veuillez retenter .</h4>
 
                                 </div>
                             </div>
@@ -74,6 +74,11 @@
         }
         ?>
     </div>
+    <script>
+        setTimeout(function() {
+            window.location.href = "home.php"; // redirige vers la page d'accueil (home.php)
+        }, 5000); // 5000ms = 5 secondes
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
 </body>
 
