@@ -15,7 +15,7 @@
     </style>
 </head>
 
-<body>
+<body onload="typeWriter()">
     <div class="navigation">
         <?php
         include "nav.php";
@@ -37,6 +37,7 @@
 
                                     <h4 class="text-center">Votre paiement à été effectué avec succès ! votre commende va bientôt être prise en charge.</h4>
 
+                                    <p class="text-center" id="patienter"></p>
                                 </div>
                             </div>
                         </section>
@@ -61,6 +62,7 @@
 
                                     <h4 class="text-center">Il y a eu un problème avec votre transaction. veuillez retenter .</h4>
 
+                                    <p class="text-center" id="patienter"></p>
                                 </div>
                             </div>
                         </section>
@@ -75,6 +77,18 @@
         ?>
     </div>
     <script>
+        var i = 0;
+        var txt = 'Veuillez patienter...'; /* The text */
+        var speed = 100; /* The speed/duration of the effect in milliseconds */
+
+        function typeWriter() {
+            if (i < txt.length) {
+                document.getElementById("patienter").innerHTML += txt.charAt(i);
+                i++;
+                setTimeout(typeWriter, speed);
+            }
+        }
+
         setTimeout(function() {
             window.location.href = "home.php"; // redirige vers la page d'accueil (home.php)
         }, 5000); // 5000ms = 5 secondes
