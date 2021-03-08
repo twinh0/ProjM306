@@ -1,9 +1,13 @@
 body{
-    font-family: "Didot";
+    /* font-family: "Didot"; */
 }
 
 #contactForm{
     font-size: larger;
     margin: auto;
     width: 70%;
+}
+
+.formulaire{
+    margin-top: 100px;
 }
