@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.4
+-- version 4.7.0
 -- https://www.phpmyadmin.net/
 --
--- Hôte : localhost
--- Généré le : lun. 22 fév. 2021 à 14:01
+-- Hôte : 127.0.0.1
+-- Généré le :  lun. 08 mars 2021 à 13:10
 -- Version du serveur :  5.7.24
--- Version de PHP : 7.2.19
+-- Version de PHP :  7.2.19
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -18,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de données : `baratie`
+-- Base de données :  `baratie`
 --
 
 -- --------------------------------------------------------
@@ -29,8 +30,9 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `commandes` (
   `idCommande` int(11) NOT NULL,
-  `dateCommande` datetime NOT NULL,
-  `#idUtilisateur` int(11) NOT NULL
+  `plat` varchar(50) NOT NULL,
+  `aConfirmer` tinyint(1) NOT NULL,
+  `idUtilisateur` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -67,7 +69,8 @@ CREATE TABLE `utilisateur` (
   `prenom` varchar(30) NOT NULL,
   `nom` varchar(50) NOT NULL,
   `age` int(11) NOT NULL,
-  `numTel` varchar(15) NOT NULL
+  `numTel` varchar(15) NOT NULL,
+  `email` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -78,8 +81,7 @@ CREATE TABLE `utilisateur` (
 -- Index pour la table `commandes`
 --
 ALTER TABLE `commandes`
-  ADD PRIMARY KEY (`idCommande`),
-  ADD KEY `#idUtilisateur` (`#idUtilisateur`);
+  ADD PRIMARY KEY (`idCommande`);
 
 --
 -- Index pour la table `plats`
@@ -102,19 +104,16 @@ ALTER TABLE `utilisateur`
 --
 ALTER TABLE `commandes`
   MODIFY `idCommande` int(11) NOT NULL AUTO_INCREMENT;
-
 --
 -- AUTO_INCREMENT pour la table `plats`
 --
 ALTER TABLE `plats`
   MODIFY `idPlats` int(11) NOT NULL AUTO_INCREMENT;
-
 --
 -- AUTO_INCREMENT pour la table `utilisateur`
 --
 ALTER TABLE `utilisateur`
-  MODIFY `idUtilisateur` int(11) NOT NULL AUTO_INCREMENT;
-COMMIT;
+  MODIFY `idUtilisateur` int(11) NOT NULL AUTO_INCREMENT;COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
