@@ -1,3 +1,17 @@
+<?php
+include("./database/header.inc.php");
+
+$selectMenus = $bdd->query("SELECT * FROM plats");
+
+// Id of the item added to the cart
+$ajouterPanier = filter_input(INPUT_GET, 'ajouter', FILTER_SANITIZE_STRING);
+
+// See if the session "panier" exist
+if(!isset($_SESSION["panier"])){
+    $_SESSION["panier"] = array();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -15,6 +29,26 @@
         <?php
         include "nav.php";
         ?>
+        <div id="logo">
+            <img src="./img/logo.png" alt="logo" />
+        </div>
+        <div id="affichage">
+            <div id="texte">
+                <?php
+                // Show the menu
+                foreach ($selectMenus as $s) {
+                    echo "<h2>" . $s["nomMenu"] . "</h2>";
+                    echo "<p>" . $s["descriptionMenu"] . "</p>";
+                    echo "<p class=\"prix\">" . $s["prixMenu"] . ".- </p>";
+                    echo "<a style=\" color:#d08352;\" href=\"menu.php?ajouter=" . $s["idMenu"] . "\">Ajouter au panier</a>";
+                    if ($ajouterPanier == $s["idMenu"]) {
+                        array_push($_SESSION["panier"], array($s["nomMenu"], $s["descriptionMenu"], $s["prixMenu"]));
+                        header("Location: menu.php");
+                    }
+                }
+                ?>
+            </div>
+        </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
 </body>
