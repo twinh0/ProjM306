@@ -29,21 +29,18 @@ if(!isset($_SESSION["panier"])){
         <?php
         include "nav.php";
         ?>
-        <div id="logo">
-            <img src="./img/logo.png" alt="logo" />
-        </div>
         <div id="affichage">
             <div id="texte">
                 <?php
                 // Show the menu
                 foreach ($selectMenus as $s) {
-                    echo "<h2>" . $s["nomMenu"] . "</h2>";
-                    echo "<p>" . $s["descriptionMenu"] . "</p>";
-                    echo "<p class=\"prix\">" . $s["prixMenu"] . ".- </p>";
-                    echo "<a style=\" color:#d08352;\" href=\"menu.php?ajouter=" . $s["idMenu"] . "\">Ajouter au panier</a>";
-                    if ($ajouterPanier == $s["idMenu"]) {
-                        array_push($_SESSION["panier"], array($s["nomMenu"], $s["descriptionMenu"], $s["prixMenu"]));
-                        header("Location: menu.php");
+                    echo "<h2>" . $s["nomPlat"] . "</h2>";
+                    echo "<p>" . $s["descriptifPlat"] . "</p>";
+                    echo "<p class=\"prix\">" . $s["prixPlat"] . ".- </p>";
+                    echo "<a style=\" color:#d08352;\" href=\"menu.php?ajouter=" . $s["idPlats"] . "\">Ajouter au panier</a>";
+                    if ($ajouterPanier == $s["idPlats"]) {
+                        array_push($_SESSION["panier"], array($s["nomPlat"], $s["descriptifPlat"], $s["prixPlat"]));
+                        header("Location: index.php?action=menu");
                     }
                 }
                 ?>
