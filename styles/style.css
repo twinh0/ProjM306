@@ -11,3 +11,19 @@ body{
 .formulaire{
     margin-top: 100px;
 }
+
+
+.formulaire .form-control:focus{
+    box-shadow:none;
+}
+
+
+.formulaire #createAccount{
+    border-color: transparent;
+    background-color: #4d1db3;
+}
+
+.formulaire #createAccount:hover{
+    background-color: green;
+
+}
