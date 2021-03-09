@@ -34,8 +34,12 @@ switch ($action) {
     case 'panier':
         require __DIR__ . '/' . PANIER;
         break;
+    case 'accountCreated':
+        require __DIR__ . '/' . CREATIONCOMPTE;
+        break;
     default:
         require __DIR__ . '/' . ACCUEIL;
         break;
 
 }
+
