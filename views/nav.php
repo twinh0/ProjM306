@@ -23,7 +23,7 @@ session_start();
                     <a class="nav-link" name="choice" value="menu" href="./index.php?action=menu">Menu</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" name="choice" value="connexion" href="./index.php?action=connexion">Connexion</a>
+                    <a class="nav-link" name="choice" value="connexion" href="./index.php?action=connexion&accountExists=false">Inscription / Connexion</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" name="choice" value="panier" href="./index.php?action=panier">Panier</a>
