@@ -1,16 +1,9 @@
 <?php
 require_once('./database/header.inc.php');
+require_once('./database/utilisateur.php');
 
-#region Deprecated Code
-// $username = filter_input(INPUT_POST, FILTER_SANITIZE_STRING);
-// $prenom = filter_input(INPUT_POST, 'fname', FILTER_SANITIZE_STRING);
-// $nom = filter_input(INPUT_POST, 'lname', FILTER_SANITIZE_STRING);
-// $numTel = filter_input(INPUT_POST, 'numTel', FILTER_SANITIZE_STRING);
-// $age = filter_input(INPUT_POST, 'age', FILTER_SANITIZE_NUMBER_INT);
-// $mdp = filter_input(INPUT_POST, 'mdp', FILTER_SANITIZE_STRING);
-#endregion
-
-$seConnecter = filter_input(INPUT_POST, 'valider');
+$creerCompte = filter_input(INPUT_POST, 'creerCompte');
+$seConnecter = filter_input(INPUT_POST, 'seConnecter');
 
 //REGEX validation
 $regexAlphabet = '/^[a-zA-Z ]*$/';
@@ -30,18 +23,85 @@ $globalError = "Votre formulaire a été mal renseigné. Veuiller réessayer à 
 
 //Tableau des variables non validées
 $nonValidatedVarsArray = $_POST;
-unset($nonValidatedVarsArray['valider']);
+unset($nonValidatedVarsArray['creerCompte']);
+unset($nonValidatedVarsArray['seConnecter']);
 
 //Tableau des variables validées
 $validatedVarsArray = array();
 
-//Affichage du formulaire d'inscription ou connexion en fonction de la valeur de $accountExists
+/**
+ * Affichage du formulaire d'inscription ou connexion en fonction de la valeur de $accountExists
+ * 
+ * filter_input($type, $variable_name, $filter)
+ * 
+ * @param $type -> INPUT_POST, INPUT_GET, etc...
+ * @param $variable_name -> Value of the name attribute from the selected DOM element
+ * @param $filter -> The ID of the filter to apply 
+ */
 $accountExists = filter_input(INPUT_GET, 'accountExists', FILTER_SANITIZE_STRING);
+
+// print_r($nonValidatedVarsArray);
+
+
+$isLoggedIn = false;
+if ($seConnecter) {
+
+    if (count($_POST) == 3) {
+
+        foreach ($nonValidatedVarsArray as $key => $value) {
+
+            switch ($key) {
+                case 'usernameLogin':
+                    if (preg_match($regexAlphaNumeric, $_POST['usernameLogin'])) {
+                        $usernameLogin = $_POST['usernameLogin'];
+
+                        array_push($validatedVarsArray, $usernameLogin);
+                    }
+                    break;
+                case 'mdpLogin':
+                    if (preg_match($regexMdp, $_POST['mdpLogin'])) {
+
+                        $preHash = $_POST['mdpLogin'];
+
+                        //Hash and salting the pwd
+                        $mdpLogin = password_hash($preHash, PASSWORD_DEFAULT);
+
+                        array_push($validatedVarsArray, $mdpLogin);
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
+    if (count($validatedVarsArray) == count($nonValidatedVarsArray)) {
+
+        try {
+
+            $userMdp = Utilisateur::FindByUsername($usernameLogin);
+
+            if(is_array($userMdp)){
+
+                if(password_verify($preHash, $userMdp['mdp'])){
+                    $isLoggedIn = true;
+                }
+            }
+
+            if($isLoggedIn){
+                header('Location: ./index.php?action=accountCreated');
+            }
+
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+        }
+    }
+}
 
 /**
  * Script pour la création d'un compte + vérification si le compte existe
  */
-if ($seConnecter) {
+if ($creerCompte) {
 
     if (count($_POST) == 8) {
 
@@ -93,7 +153,11 @@ if ($seConnecter) {
                     break;
                 case 'mdp':
                     if (preg_match($regexMdp, $_POST['mdp'])) {
-                        $mdp = md5($_POST['mdp']);
+
+                        $preHash = $_POST['mdp'];
+
+                        //Hash and salting the pwd
+                        $mdp = password_hash($preHash, PASSWORD_DEFAULT);
 
                         array_push($validatedVarsArray, $mdp);
                     }
@@ -107,31 +171,23 @@ if ($seConnecter) {
     if (count($validatedVarsArray) == count($nonValidatedVarsArray)) {
 
         try {
+            
+            $userExists = Utilisateur::CheckIfUserExists($username, $email);
 
-            $checkIfUserExists = $bdd->prepare("SELECT * FROM utilisateur WHERE nomUtilisateur = :nomUtilisateur OR email = :email");
-            $checkIfUserExists->bindParam(':nomUtilisateur', $username);
-            $checkIfUserExists->bindParam(':email', $email);
+            if (empty($userExists)) {
 
-            $checkIfUserExists->execute();
+                $newUtilisateur = new Utilisateur;
+                $newUtilisateur->setNomUtilisateur($username);
+                $newUtilisateur->setPrenom($prenom);
+                $newUtilisateur->setNom($nom);
+                $newUtilisateur->setAge($age);
+                $newUtilisateur->setNumTel($numTel);
+                $newUtilisateur->setEmail($email);
+                $newUtilisateur->setMdp($mdp);
 
-            $resultatCheckUser = $checkIfUserExists->fetchAll(PDO::FETCH_ASSOC);
+                $insertNewUser = Utilisateur::AddUser($newUtilisateur);
 
-            if (empty($resultatCheckUser)) {
-                //Requête préparée
-                $insertNewUser = $bdd->prepare("INSERT INTO utilisateur (nomUtilisateur, prenom, nom, age, numTel, email, mdp) VALUES (:nomUtilisateur, :prenom, :nom, :age, :numTel, :email, :mdp)");
-                $insertNewUser->bindParam(':nomUtilisateur', $username);
-                $insertNewUser->bindParam(':prenom', $prenom);
-                $insertNewUser->bindParam(':nom', $nom);
-                $insertNewUser->bindParam(':age', $age);
-                $insertNewUser->bindParam(':numTel', $numTel);
-                $insertNewUser->bindParam(':email', $email);
-                $insertNewUser->bindParam(':mdp', $mdp);
-
-                //Execution de la requête
-                $insertNewUser->execute();
-                
                 header('Location: ./index.php?action=accountCreated');
-
             } else {
                 echo '<div class="container-fluid d-flex justify-content-center align-items-center h-100">';
                 echo '<div id="errorOutput" class="alert alert-danger alert-dismissible fade show" role="alert">';
@@ -162,7 +218,7 @@ if ($seConnecter) {
                     <h4>Je possède un compte</h4>
                     <div class="mt-3 px-3"> <input type="text" name="usernameLogin" class="form-control" placeholder="Nom d'utilisateur" required> </div>
                     <div class="mt-3 px-3"> <input type="password" name="mdpLogin" placeholder="Votre mot de passe" class="form-control" required /> </div>
-                    <div class="mt-3 d-grid px-3"> <input type="submit" name="valider" value="Se connecter" class="btn btn-primary btn-block btn-signup text-uppercase" />
+                    <div class="mt-3 d-grid px-3"> <input type="submit" name="seConnecter" value="Se connecter" class="btn btn-primary btn-block btn-signup text-uppercase" />
                 </form>
             </div>
         </div>
@@ -192,7 +248,7 @@ if ($seConnecter) {
                                                                                                                                                                         echo $numTel;
                                                                                                                                                                     } ?>" required> </div>
                     <div class="mt-3 px-3"> <input type="password" name="mdp" placeholder="Votre mot de passe" class="form-control" required /> </div>
-                    <div class="mt-3 d-grid px-3"> <input type="submit" id="createAccount" name="valider" value="Créer le compte" class="btn btn-primary btn-block btn-signup text-uppercase"/>
+                    <div class="mt-3 d-grid px-3"> <input type="submit" id="createAccount" name="creerCompte" value="Créer le compte" class="btn btn-primary btn-block btn-signup text-uppercase" />
                 </form>
             </div>
         </div>
