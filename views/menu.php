@@ -1,7 +1,9 @@
 <?php
 include("./database/header.inc.php");
+require_once('./database/plat.php');
 
-$selectMenus = $bdd->query("SELECT * FROM plats");
+// $selectMenus = $bdd->query("SELECT * FROM plats");
+$selectMenus = Plat::SelectAll();
 
 // Id of the item added to the cart
 $ajouterPanier = filter_input(INPUT_GET, 'ajouter', FILTER_SANITIZE_STRING);
