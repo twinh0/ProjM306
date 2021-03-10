@@ -3,6 +3,11 @@ session_start();
 ?>
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap');
+
+    .nav-link {
+
+        display: inline-block !important;
+    }
 </style>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -22,8 +27,10 @@ session_start();
                 <li class="nav-item">
                     <a class="nav-link" name="choice" value="menu" href="./index.php?action=menu">Menu</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" name="choice" value="connexion" href="./index.php?action=connexion&accountExists=false">Inscription / Connexion</a>
+                <li class="nav-item" id="lienSignUpSignIn">
+                    <a class="nav-link" name="choice" value="connexion" href="./index.php?action=connexion&accountExists=false">Inscription</a>
+                    &nbsp;
+                    <a class="nav-link" name="choice" value="connexion" href="./index.php?action=connexion&accountExists=true">Connexion</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" name="choice" value="panier" href="./index.php?action=panier">Panier</a>
