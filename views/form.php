@@ -42,8 +42,10 @@ $accountExists = filter_input(INPUT_GET, 'accountExists', FILTER_SANITIZE_STRING
 
 // print_r($nonValidatedVarsArray);
 
-
 $isLoggedIn = false;
+
+
+
 if ($seConnecter) {
 
     if (count($_POST) == 3) {
@@ -53,7 +55,9 @@ if ($seConnecter) {
             switch ($key) {
                 case 'usernameLogin':
                     if (preg_match($regexAlphaNumeric, $_POST['usernameLogin'])) {
+
                         $usernameLogin = $_POST['usernameLogin'];
+                        $_SESSION['nomCompte'] = $usernameLogin;
 
                         array_push($validatedVarsArray, $usernameLogin);
                     }
@@ -77,24 +81,49 @@ if ($seConnecter) {
 
     if (count($validatedVarsArray) == count($nonValidatedVarsArray)) {
 
-        try {
 
-            $userMdp = Utilisateur::FindByUsername($usernameLogin);
+        try{
+            $userExists = Utilisateur::CheckIfUserExistsByUsername($usernameLogin);
 
-            if(is_array($userMdp)){
+            if(empty($userExists)){
 
-                if(password_verify($preHash, $userMdp['mdp'])){
-                    $isLoggedIn = true;
+                echo '<div class="container-fluid d-flex justify-content-center align-items-center h-100">';
+                echo '<div id="errorOutput" class="alert alert-danger alert-dismissible fade show" role="alert">';
+                echo "Ce nom d'utilisateur n'existe pas, veuillez créer un compte!";
+                echo '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>';
+                echo '</div>';
+                echo '</div>';
+
+            }else{
+
+                $userMdp = Utilisateur::FindMdpByUsername($usernameLogin);
+        
+                if (is_array($userMdp)) {
+        
+                    if (password_verify($preHash, $userMdp['mdp'])) {
+        
+                        $_SESSION['isLoggedIn'] = true;
+                    }
+                } else {
+                    $_SESSION['isLoggedIn'] = false;
                 }
-            }
-
-            if($isLoggedIn){
-                header('Location: ./index.php?action=accountCreated');
+        
+                if (isset($_SESSION['isLoggedIn']) && $_SESSION['isLoggedIn'] == true) {
+                    header('Location: ./index.php?action=accueil');
+                } else {
+                    echo '<div class="container-fluid d-flex justify-content-center align-items-center h-100">';
+                    echo '<div id="errorOutput" class="alert alert-danger alert-dismissible fade show" role="alert">';
+                    echo "Votre nom d'utilisateur ou votre mot de passe sont erronés";
+                    echo '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>';
+                    echo '</div>';
+                    echo '</div>';
+                }
             }
 
         } catch (PDOException $e) {
             echo "Error: " . $e->getMessage();
         }
+
     }
 }
 
@@ -171,21 +200,17 @@ if ($creerCompte) {
     if (count($validatedVarsArray) == count($nonValidatedVarsArray)) {
 
         try {
-            
+
             $userExists = Utilisateur::CheckIfUserExists($username, $email);
 
             if (empty($userExists)) {
 
-                $newUtilisateur = new Utilisateur;
-                $newUtilisateur->setNomUtilisateur($username);
-                $newUtilisateur->setPrenom($prenom);
-                $newUtilisateur->setNom($nom);
-                $newUtilisateur->setAge($age);
-                $newUtilisateur->setNumTel($numTel);
-                $newUtilisateur->setEmail($email);
-                $newUtilisateur->setMdp($mdp);
-
+                $newUtilisateur = new Utilisateur($username, $prenom, $nom, $age, $numTel, $email, $mdp);
                 $insertNewUser = Utilisateur::AddUser($newUtilisateur);
+
+                $_SESSION['nomCompte'] = $username;
+
+                $_SESSION['isLoggedIn'] = true;
 
                 header('Location: ./index.php?action=accountCreated');
             } else {
