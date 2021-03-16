@@ -21,7 +21,9 @@ $id_session = session_id();
 $action = filter_input(INPUT_GET, 'action', FILTER_SANITIZE_STRING);
 
 switch ($action) {
-
+    case '':
+        require __DIR__ . '/' . ACCUEIL;
+        break;        
     case 'accueil':
         require __DIR__ . '/' . ACCUEIL;
         break;
@@ -37,8 +39,15 @@ switch ($action) {
     case 'accountCreated':
         require __DIR__ . '/' . CREATIONCOMPTE;
         break;
+    case 'userPage':
+        require __DIR__ . '/' . USER_PAGE;
+        break;
+    case 'logout':
+        require __DIR__ . '/' . LOGOUT;
+        break;
     default:
-        require __DIR__ . '/' . ACCUEIL;
+        http_response_code(404);
+        header("HTTP/1.0 404 Not Found");
         break;
 
 }
