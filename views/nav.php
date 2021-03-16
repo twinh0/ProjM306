@@ -3,14 +3,9 @@ session_start();
 ?>
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap');
-
-    .nav-link {
-
-        display: inline-block !important;
-    }
 </style>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="./index.php?action=accueil">
             <img src="./ressources/logoBaratie.png" alt="logo" width="100" height="100" class="d-inline-block align-top">
@@ -27,14 +22,32 @@ session_start();
                 <li class="nav-item">
                     <a class="nav-link" name="choice" value="menu" href="./index.php?action=menu">Menu</a>
                 </li>
-                <li class="nav-item" id="lienSignUpSignIn">
-                    <a class="nav-link" name="choice" value="connexion" href="./index.php?action=connexion&accountExists=false">Inscription</a>
-                    &nbsp;
-                    <a class="nav-link" name="choice" value="connexion" href="./index.php?action=connexion&accountExists=true">Connexion</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" name="choice" value="panier" href="./index.php?action=panier">Panier</a>
-                </li>
+                <?php if (!isset($_SESSION['isLoggedIn'])) : ?>
+                    <li class="nav-item">
+                        <a class="nav-link" name="choice" value="connexion" href="./index.php?action=connexion&accountExists=false">Inscription</a>
+                    </li>
+                    <li>
+                        <a class="nav-link" name="choice" value="connexion" href="./index.php?action=connexion&accountExists=true">Connexion</a>
+                    </li>
+                <?php endif; ?>
+                <?php if (isset($_SESSION['isLoggedIn']) && $_SESSION['isLoggedIn'] == true) : ?>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Mon compte
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <li class="nav-item">
+                                <a class="dropdown-item" href="./index.php?action=userPage">Profile</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="dropdown-item" href="./index.php?action=panier">Panier</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="dropdown-item" href="./index.php?action=logout">Se déconnecter</a>
+                            </li>
+                        </ul>
+                    </li>
+                <?php endif; ?>
             </ul>
         </div>
     </div>
