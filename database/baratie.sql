@@ -1,121 +1,92 @@
--- phpMyAdmin SQL Dump
--- version 4.7.0
--- https://www.phpmyadmin.net/
+-- MySQL dump 10.13  Distrib 8.0.22, for Win64 (x86_64)
 --
--- Hôte : 127.0.0.1
--- Généré le :  lun. 08 mars 2021 à 13:56
--- Version du serveur :  5.7.24
--- Version de PHP :  7.2.19
-
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
-SET time_zone = "+00:00";
-
+-- Host: localhost    Database: baratie
+-- ------------------------------------------------------
+-- Server version	8.0.21
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+/*!50503 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Base de données :  `baratie`
+-- Table structure for table `commandes`
 --
 
--- --------------------------------------------------------
-
---
--- Structure de la table `commandes`
---
-
+DROP TABLE IF EXISTS `commandes`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `commandes` (
-  `idCommande` int(11) NOT NULL,
-  `plat` varchar(50) NOT NULL,
-  `aConfirmer` tinyint(1) NOT NULL,
-  `idUtilisateur` int(11) NOT NULL
+  `idCommande` int NOT NULL AUTO_INCREMENT,
+  `lstPlats` json NOT NULL,
+  `estConfirme` tinyint NOT NULL,
+  `dateCommande` datetime NOT NULL,
+  `idUtilisateur` int NOT NULL,
+  PRIMARY KEY (`idCommande`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Structure de la table `inclurequantite`
+-- Table structure for table `inclurequantite`
 --
 
+DROP TABLE IF EXISTS `inclurequantite`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `inclurequantite` (
-  `quantitePlat` int(11) NOT NULL
+  `quantitePlat` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Structure de la table `plats`
+-- Table structure for table `plats`
 --
 
+DROP TABLE IF EXISTS `plats`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `plats` (
-  `idPlats` int(11) NOT NULL,
+  `idPlats` int NOT NULL AUTO_INCREMENT,
   `nomPlat` varchar(50) NOT NULL,
   `descriptifPlat` varchar(300) NOT NULL,
-  `prixPlat` decimal(10,0) NOT NULL
+  `prixPlat` decimal(4,2) NOT NULL,
+  PRIMARY KEY (`idPlats`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Structure de la table `utilisateur`
+-- Table structure for table `utilisateur`
 --
 
+DROP TABLE IF EXISTS `utilisateur`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `utilisateur` (
-  `idUtilisateur` int(11) NOT NULL,
+  `idUtilisateur` int NOT NULL AUTO_INCREMENT,
+  `nomUtilisateur` varchar(45) NOT NULL,
   `prenom` varchar(30) NOT NULL,
   `nom` varchar(50) NOT NULL,
-  `age` int(11) NOT NULL,
-  `numTel` varchar(15) NOT NULL,
+  `age` int NOT NULL,
+  `numTel` varchar(30) NOT NULL,
   `email` text NOT NULL,
-  `mdp` varchar(25) NOT NULL
+  `mdp` varchar(255) NOT NULL,
+  PRIMARY KEY (`idUtilisateur`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
---
--- Index pour les tables déchargées
---
-
---
--- Index pour la table `commandes`
---
-ALTER TABLE `commandes`
-  ADD PRIMARY KEY (`idCommande`);
-
---
--- Index pour la table `plats`
---
-ALTER TABLE `plats`
-  ADD PRIMARY KEY (`idPlats`);
-
---
--- Index pour la table `utilisateur`
---
-ALTER TABLE `utilisateur`
-  ADD PRIMARY KEY (`idUtilisateur`);
-
---
--- AUTO_INCREMENT pour les tables déchargées
---
-
---
--- AUTO_INCREMENT pour la table `commandes`
---
-ALTER TABLE `commandes`
-  MODIFY `idCommande` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT pour la table `plats`
---
-ALTER TABLE `plats`
-  MODIFY `idPlats` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT pour la table `utilisateur`
---
-ALTER TABLE `utilisateur`
-  MODIFY `idUtilisateur` int(11) NOT NULL AUTO_INCREMENT;COMMIT;
-
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2021-03-16 15:22:46
