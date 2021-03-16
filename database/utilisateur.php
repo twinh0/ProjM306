@@ -179,20 +179,36 @@ class Utilisateur
 
     #endregion
 
+    #region Constructeur
+
+    public function __construct($unUsername, $unPrenom, $unNom, $unAge, $unNumTel, $unEmail, $unMdp)
+    {
+        $this->setNomUtilisateur($unUsername);
+        $this->setPrenom($unPrenom);
+        $this->setNom($unNom);
+        $this->setAge($unAge);
+        $this->setNumTel($unNumTel);
+        $this->setEmail($unEmail);
+        $this->setMdp($unMdp);
+    }
+
+    #endregion
+
     #region Méthodes
 
     /**
-     * Fonction qui retourne toutes lignes de la table utilisateur
+     * Fonction qui retourne toutes les données associées à un utilisateur
      * 
      * @return array
      */
-    public static function SelectAll(): array
+    public static function SelectAllInfoFromUser(string $unNomUtilisateur): array
     {
-        $request = ConnexionPdo::getInstance()->prepare("SELECT * FROM utilisateur");
+        $request = ConnexionPdo::getInstance()->prepare("SELECT * FROM utilisateur WHERE nomUtilisateur = :nomUtilisateur");    
+        $request->bindParam(":nomUtilisateur", $unNomUtilisateur, PDO::PARAM_STR, 45);
         $request->setFetchMode(PDO::FETCH_ASSOC);
         $request->execute();
 
-        $resultFromReq = $request->fetchAll();
+        $resultFromReq = $request->fetch();
         return $resultFromReq;
         die();
     }
@@ -203,10 +219,10 @@ class Utilisateur
      * @param string $unNomutilisateur
      * @return array
      */
-    public static function FindByUsername(string $unNomutilisateur): array
+    public static function FindMdpByUsername(string $unNomUtilisateur): array
     {
         $request = ConnexionPdo::getInstance()->prepare("SELECT mdp FROM utilisateur WHERE nomUtilisateur = :nomUtilisateur");
-        $request->bindParam(":nomUtilisateur", $unNomutilisateur, PDO::PARAM_STR, 45);
+        $request->bindParam(":nomUtilisateur", $unNomUtilisateur, PDO::PARAM_STR, 45);
         $request->setFetchMode(PDO::FETCH_ASSOC);
         $request->execute();
 
@@ -215,6 +231,7 @@ class Utilisateur
         die();
     }
 
+
     /**
      * Fonction qui vérifie si l'utilisateur existe déjà dans la bdd en fonction du nom de l'utilisateur ou de l'email founi
      * 
@@ -222,10 +239,32 @@ class Utilisateur
      * @param string $unEmail
      * @return array
      */
-    public static function CheckIfUserExists(string $unNomutilisateur, string $unEmail): array
+    public static function CheckIfUserExistsByUsername(string $unNomUtilisateur): array
+    {
+        $request = ConnexionPdo::getInstance()->prepare("SELECT * FROM utilisateur WHERE nomUtilisateur = :nomUtilisateur");
+        $request->bindParam(":nomUtilisateur", $unNomUtilisateur, PDO::PARAM_STR, 45);
+        $request->setFetchMode(PDO::FETCH_ASSOC);
+        $request->execute();
+
+        $resultFromReq = $request->fetchAll();
+        return $resultFromReq;
+        die();
+    }
+
+
+
+
+    /**
+     * Fonction qui vérifie si l'utilisateur existe déjà dans la bdd en fonction du nom de l'utilisateur ou de l'email founi
+     * 
+     * @param string $unNomutilisateur
+     * @param string $unEmail
+     * @return array
+     */
+    public static function CheckIfUserExists(string $unNomUtilisateur, string $unEmail): array
     {
         $request = ConnexionPdo::getInstance()->prepare("SELECT * FROM utilisateur WHERE nomUtilisateur = :nomUtilisateur OR email = :email");
-        $request->bindParam(":nomUtilisateur", $unNomutilisateur, PDO::PARAM_STR, 45);
+        $request->bindParam(":nomUtilisateur", $unNomUtilisateur, PDO::PARAM_STR, 45);
         $request->bindParam(":email", $unEmail, PDO::PARAM_STR);
         $request->setFetchMode(PDO::FETCH_ASSOC);
         $request->execute();
@@ -268,3 +307,5 @@ class Utilisateur
 
     #endregion
 }
+
+?>
