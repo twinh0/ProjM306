@@ -1,11 +1,32 @@
 body{
     /* font-family: "Didot"; */
+	margin-bottom: 50px;
+}
+
+.flex-container{
+	display: flex;
+	justify-content: center;
+}
+
+@media only screen and (max-width:1340px){
+	.flex-container{
+		justify-content: center;
+		flex-direction: column;
+	}
 }
 
 #contactForm{
     font-size: larger;
-    margin: auto;
-    width: 70%;
+	width: 800px;
+	height: 550px;
+	margin-left: 5%;
+	margin-right: 5%;
+}
+
+.flex-container iframe{
+	padding-top: 10px;
+	width: 934px;
+	height: 600px;
 }
 
 .main{

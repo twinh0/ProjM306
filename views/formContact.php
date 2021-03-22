@@ -113,7 +113,7 @@ if ($envoyer) {
         <div class="col-md-3 text-center">
             <ul class="list-unstyled mb-0">
                 <li><i class="fas fa-map-marker-alt fa-2x"></i>
-                    <p>Rue du bol 18, 1202 Genève</p>
+                    <p>Rue du Rhône 80, 1204 Genève</p>
                 </li>
 
                 <li><i class="fas fa-phone mt-4 fa-2x"></i>

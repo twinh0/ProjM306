@@ -55,14 +55,17 @@
             </button>
         </div>
     </div>
-    <div id="contactForm">
-        <?php
-        include 'formContact.php'
-        ?>
+    <div class="flex-container">
+        <div id="contactForm">
+            <?php
+            include 'formContact.php'
+            ?>
+        </div>
+        <!-- <iframe style="margin:auto;border:0;" loading="lazy" allowfullscreen src="https://www.google.com/maps/embed/v1/place?q=place_id:ChIJ5aIrXy5ljEcRG1QggcwT4g4&key=AIzaSyAqM2Be3mw5Fiah4qIiDPw8H1Ry2EsIGU0"></iframe> -->
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2761.3444382674434!2d6.14732215133857!3d46.20360269171884!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x478c652e5f2ba2e5%3A0xee213cc8120541b!2sRue%20du%20Rh%C3%B4ne%2080%2C%201204%20Gen%C3%A8ve!5e0!3m2!1sen!2sch!4v1615984777277!5m2!1sen!2sch"style="margin:auto; border:0;" allowfullscreen="" loading="lazy"></iframe>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
-
 
     <!-- reference to Google Authentication  -->
     <!-- <script src="https://apis.google.com/js/platform.js" async defer></script> -->
