@@ -1,4 +1,5 @@
-# ProjM306
+# ProjM306  
+![logoBaratie](https://github.com/twinh0/ProjM306/blob/main/ressources/logoBaratie.png)  
 Thème : restaurant en ligne  
 Nom : Baratie  
 La base de données contient les commandes des clients ainsi que les menus disponibles.  
