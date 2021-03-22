@@ -1,7 +1,9 @@
 <?php
 include("./database/header.inc.php");
+include("./database/commande.php");
 
-$insertCart = $bdd->prepare("INSERT INTO commandes(plat, idUtilisateur) VALUES (?, ?)");
+//$insertCart = $bdd->prepare("INSERT INTO commandes(plat, idUtilisateur) VALUES (?, ?)");
+$insertCart = new Commande();
 
 // submit button
 $submit = filter_input(INPUT_POST, 'submit');
@@ -16,7 +18,10 @@ if (!isset($_SESSION["panier"])) {
 if ($submit) {
     // If the user exist the command is put in the bdd and the user is redirect to transaction.php
     for ($row = 0; $row < count($_SESSION["panier"]); $row++) {
-        $insertCart->execute(array($_SESSION["panier"][$row][0], "1")); // ID UTILISATEUR A REMPLIR
+        //$insertCart->execute(array($_SESSION["panier"][$row][0], "1")); // ID UTILISATEUR A REMPLIR
+        $insertCart->setPlat($_SESSION["panier"][$row][0]);
+        $insertCart->setAConfirmer("1");
+        Commande::add($insertCart);
     }
 }
 
