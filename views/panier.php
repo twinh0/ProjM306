@@ -1,14 +1,26 @@
 <?php
 include("./database/header.inc.php");
 include("./database/commande.php");
+include('./database/utilisateur.php');
 
 //$insertCart = $bdd->prepare("INSERT INTO commandes(plat, idUtilisateur) VALUES (?, ?)");
 $insertCart = new Commande();
+
+$userInfo = Utilisateur::SelectAllInfoFromUser($_SESSION['nomCompte']);
 
 // submit button
 $submit = filter_input(INPUT_POST, 'submit');
 // delete the cart
 $sup = filter_input(INPUT_GET, 'sup', FILTER_SANITIZE_STRING);
+
+# delete the cart
+if ($sup == true) {
+    // Destroy the session if is setted
+    if (isset($_SESSION["panier"])) {
+        $_SESSION["panier"] = array();
+    }
+    header("Location: index.php?action=panier");
+}
 
 // See if the session "panier" exist
 if (!isset($_SESSION["panier"])) {
@@ -19,20 +31,14 @@ if ($submit) {
     // If the user exist the command is put in the bdd and the user is redirect to transaction.php
     for ($row = 0; $row < count($_SESSION["panier"]); $row++) {
         //$insertCart->execute(array($_SESSION["panier"][$row][0], "1")); // ID UTILISATEUR A REMPLIR
-        $insertCart->setPlat($_SESSION["panier"][$row][0]);
-        $insertCart->setAConfirmer("1");
-        Commande::add($insertCart);
+        $insertCart->setLstPlats(json_encode($_SESSION["panier"]));
+        $insertCart->setEstConfirme("1");
+        $insertCart->setDateCommande(date('Y-m-d H:i:s'));
+        $insertCart->setIdUtilisateur($userInfo["idUtilisateur"]);
     }
+    Commande::add($insertCart);
 }
 
-# delete the cart
-if ($sup == true) {
-    // Destroy the session if is setted
-    if (isset($_SESSION["panier"])) {
-        session_destroy();
-    }
-    header("Location: index.php?action=panier");
-}
 
 ?>
 <!DOCTYPE html>
@@ -54,7 +60,8 @@ if ($sup == true) {
         ?>
         <form action="#" method="POST">
             <div class="formBorder">
-                <button>Payer par paypal</button>
+                <!-- Payer par paypal -->
+                <button>Connecter paypal</button>
                 <input type="submit" name="submit" value="Ok" placeholder="Etape suivante">
             </div>
         </form>
