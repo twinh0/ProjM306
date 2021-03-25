@@ -39,6 +39,12 @@ $ajouterPanier = filter_input(INPUT_GET, 'ajouter', FILTER_SANITIZE_STRING);
                     echo "<h2>" . $s["nomPlat"] . "</h2>";
                     echo "<p>" . $s["descriptifPlat"] . "</p>";
                     echo "<p class=\"prix\">" . $s["prixPlat"] . ".- </p>";
+
+                    //Ajout de l'input type "number" pour sélectionner la quantité de chaque produit
+                    // echo "<input type='number' name='quantite' value='1' min='1'/>";
+                    // echo nl2br("<br/>");
+
+
                     echo "<a style=\" color:#d08352;\" href=\"index.php?action=menu&ajouter=" . $s["idPlats"] . "\">Ajouter au panier</a>";
                     if(!isset($_SESSION["panier"])){
                         $_SESSION["panier"] = array();
