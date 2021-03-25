@@ -89,20 +89,20 @@ unset($displayInfo['mdp']);
                     </tr>
                 </thead>
                 <tbody>
-                <?php
-                if(!empty($userInfo)){
-                    foreach($infoCommande as $key => $value){
-                        echo "<tr>";
-                        echo "<td>" . $infoCommande[$key]['dateCommande'] . "</td>";
-                        echo "<td>" . $infoCommande[$key]['lstPlats'] . "</td>";
-                        echo "</tr>";
+                    <?php
+                    if (!empty($userInfo)) {
+                        foreach ($infoCommande as $key => $value) {
+                            echo "<tr>";
+                            echo "<td>" . $infoCommande[$key]['dateCommande'] . "</td>";
+                            echo "<td>" . $infoCommande[$key]['lstPlats'] . "</td>";
+                            echo "</tr>";
+                        }
                     }
-                }
-                
-
-                ?>
+                    ?>
                 </tbody>
             </table>
+        </div>
+    </div>
 
         </div>
 

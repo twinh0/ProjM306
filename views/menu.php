@@ -27,6 +27,12 @@ $ajouterPanier = filter_input(INPUT_GET, 'ajouter', FILTER_SANITIZE_STRING);
 </head>
 
 <body>
+    <style>
+        body {
+            height: 100vh;
+            background-image: linear-gradient(to right top, #da9eff, #2984b5);
+        }
+    </style>
     <div class="navigation">
         <?php
         include "nav.php";
@@ -36,23 +42,21 @@ $ajouterPanier = filter_input(INPUT_GET, 'ajouter', FILTER_SANITIZE_STRING);
                 <?php
                 // Show the menu
                 foreach ($selectMenus as $s) {
+                    echo "<div class='plat'>";
                     echo "<h2>" . $s["nomPlat"] . "</h2>";
                     echo "<p>" . $s["descriptifPlat"] . "</p>";
                     echo "<p class=\"prix\">" . $s["prixPlat"] . ".- </p>";
-
-                    //Ajout de l'input type "number" pour sélectionner la quantité de chaque produit
-                    // echo "<input type='number' name='quantite' value='1' min='1'/>";
-                    // echo nl2br("<br/>");
-
-
-                    echo "<a style=\" color:#d08352;\" href=\"index.php?action=menu&ajouter=" . $s["idPlats"] . "\">Ajouter au panier</a>";
-                    if(!isset($_SESSION["panier"])){
+                    //echo "<p>";
+                    echo "<a href=\"index.php?action=menu&ajouter=" . $s["idPlats"] . "\">Ajouter au panier</a>";
+                    echo "</p>";
+                    if (!isset($_SESSION["panier"])) {
                         $_SESSION["panier"] = array();
-                    }         
+                    }
                     if ($ajouterPanier == $s["idPlats"]) {
                         array_push($_SESSION["panier"], array($s["nomPlat"], $s["descriptifPlat"], $s["prixPlat"]));
                         header("Location: index.php?action=menu");
                     }
+                    echo "</div>";
                 }
                 ?>
             </div>

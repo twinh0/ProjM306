@@ -106,3 +106,38 @@ body{
 	padding: 5px;
 	margin: 0 0 10px 0;
 }
+
+
+
+.plat{
+	border-radius: 10px;
+	background-image: linear-gradient(to right top, #969da1, #d45f02);
+	height: 10%;
+	width:70%;
+	margin: auto;
+	margin-top: 10px;
+	margin-bottom: 50px;
+	color: white;
+	padding: 10px 10px 0px 10px;
+}
+
+.plat h2, p{
+	text-align: center;
+}
+
+.prix{
+	font-size: 2em;
+}
+
+.plat a{
+	text-align: center;
+	transition: 0.5s;
+	color:white;
+	text-decoration: none;
+}
+
+.plat a:hover{
+	transition: 0.5s;
+	font-size:30px;
+	color: green;
+}
