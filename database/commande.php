@@ -147,6 +147,25 @@ class Commande
         return $insertionSuccessful;
     }
 
+    /**
+     * Retourne les commandes de l'utilisateur en fonction de son id dans la bdd
+     *
+     * @param integer $idUtilisateur
+     * @return array
+     */
+    public static function GetOrdersByUserId(int $idUtilisateur): array{
+
+        $request = ConnexionPdo::getInstance()->prepare('SELECT dateCommande, lstPlats FROM commandes WHERE idUtilisateur = :idUtilisateur');
+
+        $request->bindParam(":idUtilisateur", $idUtilisateur, PDO::PARAM_INT);
+        $request->setFetchMode(PDO::FETCH_ASSOC);
+        $request->execute();
+    
+        $resultFromReq = $request->fetchAll();
+        return $resultFromReq;
+
+    }
+
 
 
     #endregion
