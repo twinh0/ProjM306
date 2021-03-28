@@ -46,8 +46,8 @@ $ajouterPanier = filter_input(INPUT_GET, 'ajouter', FILTER_SANITIZE_STRING);
                     echo "<h2>" . $s["nomPlat"] . "</h2>";
                     echo "<p>" . $s["descriptifPlat"] . "</p>";
                     echo "<p class=\"prix\">" . $s["prixPlat"] . ".- </p>";
-                    //echo "<p>";
-                    echo "<a href=\"index.php?action=menu&ajouter=" . $s["idPlats"] . "\">Ajouter au panier</a>";
+                    echo "<p>";
+                    echo "<a class='btn btn-success' href=\"index.php?action=menu&ajouter=" . $s["idPlats"] . "\">Ajouter au panier</a>";
                     echo "</p>";
                     if (!isset($_SESSION["panier"])) {
                         $_SESSION["panier"] = array();
