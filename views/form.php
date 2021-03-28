@@ -82,10 +82,10 @@ if ($seConnecter) {
     if (count($validatedVarsArray) == count($nonValidatedVarsArray)) {
 
 
-        try{
+        try {
             $userExists = Utilisateur::CheckIfUserExistsByUsername($usernameLogin);
 
-            if(empty($userExists)){
+            if (empty($userExists)) {
 
                 echo '<div class="container-fluid d-flex justify-content-center align-items-center h-100">';
                 echo '<div id="errorOutput" class="alert alert-danger alert-dismissible fade show" role="alert">';
@@ -93,21 +93,20 @@ if ($seConnecter) {
                 echo '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>';
                 echo '</div>';
                 echo '</div>';
-
-            }else{
+            } else {
 
                 $userMdp = Utilisateur::FindMdpByUsername($usernameLogin);
-        
+
                 if (is_array($userMdp)) {
-        
+
                     if (password_verify($preHash, $userMdp['mdp'])) {
-        
+
                         $_SESSION['isLoggedIn'] = true;
                     }
                 } else {
                     $_SESSION['isLoggedIn'] = false;
                 }
-        
+
                 if (isset($_SESSION['isLoggedIn']) && $_SESSION['isLoggedIn'] == true) {
                     header('Location: ./index.php?action=accueil');
                 } else {
@@ -119,11 +118,9 @@ if ($seConnecter) {
                     echo '</div>';
                 }
             }
-
         } catch (PDOException $e) {
             echo "Error: " . $e->getMessage();
         }
-
     }
 }
 
@@ -240,7 +237,7 @@ if ($creerCompte) {
         <div class="container-fluid d-flex justify-content-center align-items-center h-100">
             <div class="card p-3 text-center py-4">
                 <form method="POST" action="#">
-                    <h4>Je possède un compte</h4>
+                    <p class="display-6">Je possède un compte</p>
                     <div class="mt-3 px-3"> <input type="text" name="usernameLogin" class="form-control" placeholder="Nom d'utilisateur" required> </div>
                     <div class="mt-3 px-3"> <input type="password" name="mdpLogin" placeholder="Votre mot de passe" class="form-control" required /> </div>
                     <div class="mt-3 d-grid px-3"> <input type="submit" name="seConnecter" value="Se connecter" class="btn btn-primary btn-block btn-signup text-uppercase" />
@@ -253,7 +250,7 @@ if ($creerCompte) {
         <div class="container-fluid d-flex justify-content-center align-items-center h-100">
             <div class="card p-3 text-center py-4">
                 <form method="POST" action="#">
-                    <h4>Créer un compte</h4>
+                    <p class="display-6">Créer un compte</p>
                     <div> <span>Avez-vous un compte existant?</span> <a href="./index.php?action=connexion&accountExists=true" class="text-decoration-none">Me connecter</a> </div>
                     <div class="mt-3 px-3"> <input type="text" name="username" class="form-control" placeholder="Nom d'utilisateur" value="<?php if (isset($username)) {
                                                                                                                                                 echo $username;
@@ -272,10 +269,21 @@ if ($creerCompte) {
                     <div class="mt-3 px-3"> <input type="tel" name="numTel" class="form-control" placeholder="Numéro de téléphone, format: +41 XX XXX XX XX" value="<?php if (isset($numTel)) {
                                                                                                                                                                         echo $numTel;
                                                                                                                                                                     } ?>" required> </div>
-                    <div class="mt-3 px-3"> <input type="password" name="mdp" placeholder="Votre mot de passe" class="form-control" required /> </div>
+                    <div class="mt-3 px-3"> <input type="password" name="mdp" id="pwd" placeholder="Votre mot de passe" class="form-control" required /> </div>
                     <div class="mt-3 d-grid px-3"> <input type="submit" id="createAccount" name="creerCompte" value="Créer le compte" class="btn btn-primary btn-block btn-signup text-uppercase" />
                 </form>
             </div>
+
+            <div id="pwdRules">
+                <br />
+                <h5>Le mot de passe doit répondre aux critères ci-dessous: </h3>
+                    <p id="lowercase" class="invalid">min. <b>1 minuscule</b></p>
+                    <p id="uppercase" class="invalid">min. <b>1 majuscule</b></p>
+                    <p id="number" class="invalid">min. <b>1 chiffre</b></p>
+                    <p id="length" class="invalid">min. <b>8 caractères</b></p>
+            </div>
+
+
         </div>
     </div>
 <?php endif; ?>
