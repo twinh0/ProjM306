@@ -1,5 +1,9 @@
 <?php
 session_start();
+
+if(isset($_GET['sup'])){
+    unset($_SESSION['panier']);
+}
 ?>
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap');
