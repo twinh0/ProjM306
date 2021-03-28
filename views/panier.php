@@ -17,7 +17,7 @@ $sup = filter_input(INPUT_GET, 'sup', FILTER_SANITIZE_STRING);
 if ($sup == true) {
     // Destroy the session if is setted
     if (isset($_SESSION["panier"])) {
-        $_SESSION["panier"] = array();
+        unset($_SESSION['panier']);
     }
     header("Location: index.php?action=panier");
 }
@@ -36,7 +36,7 @@ if ($submit) {
         $insertCart->setDateCommande(date('Y-m-d H:i:s'));
         $insertCart->setIdUtilisateur($userInfo["idUtilisateur"]);
     }
-    Commande::add($insertCart);
+    Commande::Add($insertCart);
 }
 
 
@@ -49,30 +49,50 @@ if ($submit) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
-    <link href="../styles/style.css" rel="stylesheet">
+    <link href="./styles/style.css" rel="stylesheet">
     <title>Panier</title>
 </head>
 
 <body>
+    <style>
+        body {
+            height: 100vh;
+            background-image: linear-gradient(to right top, #da9eff, #2984b5);
+        }
+    </style>
     <div class="navigation">
         <?php
         include "nav.php";
         ?>
-        <form action="#" method="POST">
-            <div class="formBorder">
-                <!-- Payer par paypal -->
-                <button>Connecter paypal</button>
-                <input type="submit" name="submit" value="Ok" placeholder="Etape suivante">
-            </div>
-        </form>
         <div class="container">
-            <a class="text-danger" href="index.php?action=panier&sup=true">Vider le panier</a>
+            <?php if (!empty($_SESSION['panier'])) : ?>
+                <form action="#" method="POST">
+                    <div class="formBorder">
+                        <!-- Payer par paypal -->
+                        <button>Connecter paypal</button>
+                        <input type="submit" name="submit" value="Ok" placeholder="Etape suivante">
+                    </div>
+                </form>
+                <a class="btn btn-danger" href="index.php?action=panier&sup=true">Vider le panier</a>
+            <?php endif; ?>
             <?php
             // Show your cart
-            for ($row = 0; $row < count($_SESSION["panier"]); $row++) {
-                echo "<h2>" . $_SESSION["panier"][$row][0] . "</h2>";
-                echo "<p>" . $_SESSION["panier"][$row][1] . "</p>";
-                echo "<p>" . $_SESSION["panier"][$row][2] . ".- </p>";
+            if (empty($_SESSION['panier'])) {
+                echo "<div style='margin:auto; text-align:center; margin-top:40px;'>";
+                echo "<h2 class='display-5'>Votre panier est vide</h2>";
+                echo "<a class='btn btn-info btn-lg' href='./index.php?action=menu' style='margin-top: 10px;'>Voir le menu</a>";
+                echo "</div>";
+            } else {
+                echo "<div class='plat'>";
+                echo "<h2 class='display-1'>Votre panier</h2>";
+                for ($row = 0; $row < count($_SESSION["panier"]); $row++) {
+                    echo "<div>";
+                    echo "<h2>" . $_SESSION["panier"][$row][0] . "</h2>";
+                    echo "<p>" . $_SESSION["panier"][$row][1] . "</p>";
+                    echo "<p>" . $_SESSION["panier"][$row][2] . ".- </p>";
+                    echo "</div>";
+                }
+                echo "</div>";
             }
             ?>
         </div>
