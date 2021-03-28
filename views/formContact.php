@@ -42,29 +42,36 @@ if ($envoyer) {
 
                 <!--Grid row-->
                 <div class="row">
+                    <style>
+                        .form-floating {
+                            font-size: 18px;
+                            margin-bottom: 10px;
+                        }
+                    </style>
 
                     <!--Grid column-->
                     <div class="col-md-6">
-                        <div class="md-form mb-0">
-                            <label for="name" class="">Votre Prénom: </label>
-                            <input type="text" id="name" name="prenom" class="form-control">
+                        <div class="form-floating">
+                            <input type="text" name="prenom" class="form-control" id="floatingInput" placeholder="random">
+                            <label for="floatingInput">Votre prénom</label>
                         </div>
                     </div>
 
                     <!--Grid column-->
                     <div class="col-md-6">
-                        <div class="md-form mb-0">
-                            <label for="name" class="">Votre Nom: </label>
-                            <input type="text" id="name" name="nom" class="form-control">
+                        <div class="form-floating">
+                            <input type="text" name="nom" class="form-control" id="floatingInput" placeholder="random">
+                            <label for="floatingInput">Votre nom</label>
                         </div>
                     </div>
+
                     <!--Grid column-->
 
                     <!--Grid column-->
                     <div class="col-md-12">
-                        <div class="md-form mb-0">
-                            <label for="email" class="">Votre courriel: </label>
-                            <input type="text" id="email" name="email" class="form-control">
+                        <div class="form-floating">
+                            <input type="email" name="email" class="form-control" id="floatingInput" placeholder="random@hello.com">
+                            <label for="floatingInput">Votre email</label>
                         </div>
                     </div>
                     <!--Grid column-->
@@ -75,9 +82,9 @@ if ($envoyer) {
                 <!--Grid row-->
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="md-form mb-0">
-                            <label for="subject" class="">Sujet: </label>
-                            <input type="text" id="subject" name="sujet" class="form-control">
+                        <div class="form-floating">
+                            <input type="text" name="sujet" class="form-control" id="floatingInput" placeholder="random.">
+                            <label for="floatingInput">Sujet</label>
                         </div>
                     </div>
                 </div>
@@ -88,21 +95,17 @@ if ($envoyer) {
 
                     <!--Grid column-->
                     <div class="col-md-12">
-
-                        <div class="md-form">
-                            <label for="message">Votre message: </label>
-                            <textarea type="text" id="message" name="message" rows="2" class="form-control md-textarea"></textarea>
+                        <div class="form-floating">
+                            <textarea class="form-control" name="message "placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
+                            <label for="floatingTextarea2">Votre Message</label>
                         </div>
-
                     </div>
                 </div>
                 <!--Grid row-->
                 <div class="text-center text-md-left">
-                    <br />
                     <input type="submit" name="envoyer" class="btn btn-primary" value="Envoyer" />
                     <!-- <a class="btn btn-primary" onclick="document.getElementById('contact-form').submit();">Send</a> -->
                 </div>
-
             </form>
 
             <div class="status"></div>
