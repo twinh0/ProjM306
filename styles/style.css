@@ -1,143 +1,168 @@
-body{
-    /* font-family: "Didot"; */
-	margin-bottom: 50px;
+body {
+  /* font-family: "Didot"; */
+  margin-bottom: 50px;
 }
 
-.flex-container{
-	display: flex;
-	justify-content: center;
+.flex-container {
+  display: flex;
+  justify-content: center;
 }
 
-@media only screen and (max-width:1340px){
-	.flex-container{
-		justify-content: center;
-		flex-direction: column;
-	}
+@media only screen and (max-width: 1340px) {
+  .flex-container {
+    justify-content: center;
+    flex-direction: column;
+  }
 }
 
-#contactForm{
-    font-size: larger;
-	width: 800px;
-	height: 550px;
-	margin-left: 5%;
-	margin-right: 5%;
+#contactForm {
+  font-size: larger;
+  width: 800px;
+  height: 550px;
+  margin-left: 5%;
+  margin-right: 5%;
 }
 
-.flex-container iframe{
-	padding-top: 10px;
-	width: 934px;
-	height: 600px;
+.flex-container iframe {
+  padding-top: 10px;
+  width: 934px;
+  height: 600px;
 }
 
-.main{
-	margin: auto;
-	background-color: #212529;
+.main {
+  margin: auto;
+  background-color: #212529;
 }
 
-.carousel img{
-	max-width: 1366px;
-	max-height: 768px;
-	margin: auto;
+.carousel img {
+  max-width: 1366px;
+  max-height: 768px;
+  margin: auto;
 }
 
-@media only screen and (min-width: 1366px){
-	.carousel{
-		transition: max-width 2s;
-		margin: auto;
-		max-width: 85vw;
-	}
-	.carousel-control-prev{
-		margin-left: 40px;
-	}
-	.carousel-control-next{
-		margin-right: 40px;
-	}
+@media only screen and (min-width: 1366px) {
+  .carousel {
+    transition: max-width 2s;
+    margin: auto;
+    max-width: 85vw;
+  }
+  .carousel-control-prev {
+    margin-left: 40px;
+  }
+  .carousel-control-next {
+    margin-right: 40px;
+  }
 }
 
-.formulaire{
-    margin-top: 100px;
+.formulaire {
+  margin-top: 70px;
 }
 
-
-.formulaire .form-control:focus{
-    box-shadow:none;
+.formulaire .form-control:focus {
+  box-shadow: none;
 }
 
-
-.formulaire #createAccount{
-    border-color: transparent;
-    background-color: #4d1db3;
+.formulaire #createAccount {
+  border-color: transparent;
+  background-color: #4d1db3;
 }
 
-.formulaire #createAccount:hover{
-    background-color: green;
-
+.formulaire #createAccount:hover {
+  background-color: green;
 }
 
-.content{
-    width: auto;
-	max-width: 900px;
-    margin: 0 auto;
+.content {
+  width: auto;
+  max-width: 900px;
+  margin: 0 auto;
 }
 
 .content h2 {
-	margin: 0;
-	padding: 25px 0;
-	font-size: 22px;
-	border-bottom: 1px solid #e0e0e3;
-	color: #4a536e;
+  margin: 0;
+  padding: 25px 0;
+  font-size: 22px;
+  border-bottom: 1px solid #e0e0e3;
+  color: #4a536e;
 }
 
-.content > p, .content > div {
-	box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.1);
-	margin: 25px 0;
-	padding: 25px;
-	background-color: #fff;
+.content > p,
+.content > div {
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.1);
+  margin: 25px 0;
+  padding: 25px;
+  background-color: #fff;
 }
-.content > p table td, .content > div table td {
-	padding: 5px;
+.content > p table td,
+.content > div table td {
+  padding: 5px;
 }
-.content > p table td:first-child, .content > div table td:first-child {
-	font-weight: bold;
-	color: #4a536e;
-	padding-right: 15px;
+.content > p table td:first-child,
+.content > div table td:first-child {
+  font-weight: bold;
+  color: #4a536e;
+  padding-right: 15px;
 }
 .content > div p {
-	padding: 5px;
-	margin: 0 0 10px 0;
+  padding: 5px;
+  margin: 0 0 10px 0;
 }
 
-
-
-.plat{
-	border-radius: 10px;
-	background-image: linear-gradient(to right top, #969da1, #d45f02);
-	height: 10%;
-	width:70%;
-	margin: auto;
-	margin-top: 10px;
-	margin-bottom: 50px;
-	color: white;
-	padding: 10px 10px 0px 10px;
+.plat {
+  border-radius: 10px;
+  background-image: linear-gradient(to right top, #969da1, #d45f02);
+  height: 10%;
+  width: 70%;
+  margin: auto;
+  margin-top: 10px;
+  margin-bottom: 50px;
+  color: white;
+  padding: 10px 10px 10px 10px;
 }
 
-.plat h2, p{
-	text-align: center;
+.plat h2,
+p {
+  text-align: center;
 }
 
-.prix{
-	font-size: 2em;
+.prix {
+  font-size: 2em;
 }
 
-.plat a{
-	text-align: center;
-	transition: 0.5s;
-	color:white;
-	text-decoration: none;
+.plat a {
+  text-align: center;
+  transition: 0.5s;
+  color: white;
+  text-decoration: none;
 }
 
-.plat a:hover{
-	transition: 0.5s;
-	font-size:30px;
-	color: green;
+.plat a:hover {
+  transition: 0.5s;
+  font-size: 1.5em;
+}
+
+.formBorder {
+  padding-top: 10px;
+  background-color: green;
+  margin: auto;
+}
+
+/* for js pwd validation */
+.valid {
+  color: green;
+}
+
+.valid:before {
+  position: relative;
+  left: -35px;
+  content: "X";
+}
+
+.invalid {
+  color: red;
+}
+
+.invalid:before {
+  position: relative;
+  left: -35px;
+  content: "X";;
 }
