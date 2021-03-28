@@ -42,7 +42,7 @@ unset($displayInfo['mdp']);
         <h2>Welcome back <?= $userInfo['nomUtilisateur']; ?>!</h2>
 
         <div>
-            <p>Les détails de votre compte:</p>
+            <p class="display-6">Les détails de votre compte:</p>
             <table>
                 <?php
                 foreach ($displayInfo as $key => $value) {
@@ -80,7 +80,7 @@ unset($displayInfo['mdp']);
             </table>
         </div>
         <div>
-            <table class="table table-bordered table-striped">
+            <table class="table table-striped table-bordered table-hover">
                 <thead style="text-align:center;">
                     <tr>
                         <th>Date de la commande</th>
@@ -92,9 +92,18 @@ unset($displayInfo['mdp']);
                     <?php
                     if (!empty($userInfo)) {
                         foreach ($infoCommande as $key => $value) {
+                            $platsItems = json_decode($infoCommande[$key]['lstPlats']);
+                            //var_dump($platsItems);
                             echo "<tr>";
                             echo "<td>" . $infoCommande[$key]['dateCommande'] . "</td>";
                             echo "<td>" . $infoCommande[$key]['lstPlats'] . "</td>";
+                            // foreach ($platsItems as $key => $value) {
+                            //     echo "<td>" . $platsItems[$key]['plats'] . "</td>";
+                            // }
+
+                            // for($i = 0; $i < $platsItems; $i++){
+                            //     echo "<td>" . $platsItems[$i][$i] . "</td>";
+                            // }
                             echo "</tr>";
                         }
                     }
@@ -104,7 +113,7 @@ unset($displayInfo['mdp']);
         </div>
     </div>
 
-        </div>
+    </div>
 
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
