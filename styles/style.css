@@ -110,7 +110,7 @@ body {
 .plat {
   border-radius: 10px;
   background-image: linear-gradient(to right top, #969da1, #d45f02);
-  height: 10%;
+  height: auto;
   width: 70%;
   margin: auto;
   margin-top: 10px;
