@@ -13,6 +13,9 @@ $submit = filter_input(INPUT_POST, 'submit');
 // delete the cart
 $sup = filter_input(INPUT_GET, 'sup', FILTER_SANITIZE_STRING);
 
+//Tableau global de tous les plats
+$lstPlats = array();
+
 # delete the cart
 if ($sup == true) {
     // Destroy the session if is setted
@@ -28,10 +31,15 @@ if (!isset($_SESSION["panier"])) {
 }
 
 if ($submit) {
+
+    foreach($_SESSION['panier'] as $plats){
+        array_push($lstPlats, $plats);
+    }
+
     // If the user exist the command is put in the bdd and the user is redirect to transaction.php
     for ($row = 0; $row < count($_SESSION["panier"]); $row++) {
         //$insertCart->execute(array($_SESSION["panier"][$row][0], "1")); // ID UTILISATEUR A REMPLIR
-        $insertCart->setLstPlats(json_encode($_SESSION["panier"]));
+        $insertCart->setLstPlats(json_encode($lstPlats));
         $insertCart->setEstConfirme("1");
         $insertCart->setDateCommande(date('Y-m-d H:i:s'));
         $insertCart->setIdUtilisateur($userInfo["idUtilisateur"]);
@@ -85,11 +93,11 @@ if ($submit) {
             } else {
                 echo "<div class='plat'>";
                 echo "<h2 class='display-1'>Votre panier</h2>";
-                for ($row = 0; $row < count($_SESSION["panier"]); $row++) {
+                foreach($_SESSION['panier'] as $key => $value){
                     echo "<div>";
-                    echo "<h2>" . $_SESSION["panier"][$row][0] . "</h2>";
-                    echo "<p>" . $_SESSION["panier"][$row][1] . "</p>";
-                    echo "<p>" . $_SESSION["panier"][$row][2] . ".- </p>";
+                    echo "<h2>" . $_SESSION["panier"][$key]["nomPlat"] . "</h2>";
+                    echo "<p>" . $_SESSION["panier"][$key]["descriptifPlat"]. "</p>";
+                    echo "<p>" . $_SESSION["panier"][$key]["prixPlat"] . ".- </p>";
                     echo "</div>";
                 }
                 echo "</div>";
