@@ -47,7 +47,11 @@ $ajouterPanier = filter_input(INPUT_GET, 'ajouter', FILTER_SANITIZE_STRING);
                     echo "<p>" . $s["descriptifPlat"] . "</p>";
                     echo "<p class=\"prix\">" . $s["prixPlat"] . ".- </p>";
                     echo "<p>";
-                    echo "<a class='btn btn-success' href=\"index.php?action=menu&ajouter=" . $s["idPlats"] . "\">Ajouter au panier</a>";
+                    if (isset($_SESSION['isLoggedIn']) && $_SESSION['isLoggedIn'] == true){
+                        echo "<a class='btn btn-success' href=\"index.php?action=menu&ajouter=" . $s["idPlats"] . "\">Ajouter au panier</a>";
+                    }else{
+                        echo "<a class='btn btn-success' href=\"index.php?action=connexion&accountExists=false\">Ajouter au panier</a>";
+                    }
                     echo "</p>";
                     if (!isset($_SESSION["panier"])) {
                         $_SESSION["panier"] = array();
