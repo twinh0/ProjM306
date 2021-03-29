@@ -8,10 +8,10 @@ $selectMenus = Plat::SelectAll();
 // Id of the item added to the cart
 $ajouterPanier = filter_input(INPUT_GET, 'ajouter', FILTER_SANITIZE_STRING);
 
-// See if the session "panier" exist
-// if(!isset($_SESSION["panier"])){
-//     $_SESSION["panier"] = array();
-// }
+
+$keysForBasket = array("nomPlat", "descriptifPlat", "prixPlat");
+
+
 ?>
 
 <!DOCTYPE html>
@@ -57,7 +57,8 @@ $ajouterPanier = filter_input(INPUT_GET, 'ajouter', FILTER_SANITIZE_STRING);
                         $_SESSION["panier"] = array();
                     }
                     if ($ajouterPanier == $s["idPlats"]) {
-                        array_push($_SESSION["panier"], array($s["nomPlat"], $s["descriptifPlat"], $s["prixPlat"]));
+                        unset($s['idPlats']);
+                        array_push($_SESSION["panier"], array_combine($keysForBasket, $s));
                         header("Location: index.php?action=menu");
                     }
                     echo "</div>";
