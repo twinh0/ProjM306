@@ -30,7 +30,7 @@ switch ($action) {
     case 'menu':
         require __DIR__ . '/' . MENU;
         break;
-    case 'connexion':
+    case 'connexion' && !isset($_SESSION['isLoggedIn']):
         require __DIR__ . '/' . CONNEXION;
         break;
     case 'panier':
