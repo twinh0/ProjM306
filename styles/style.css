@@ -154,7 +154,8 @@ p {
 .valid:before {
   position: relative;
   left: -35px;
-  content: "X";
+  /*Checkmark symbol: */
+  content: "\2713";
 }
 
 .invalid {
@@ -164,5 +165,5 @@ p {
 .invalid:before {
   position: relative;
   left: -35px;
-  content: "X";;
+  content: "X";
 }
