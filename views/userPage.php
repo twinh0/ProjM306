@@ -8,13 +8,19 @@ $userInfo = Utilisateur::SelectAllInfoFromUser($_SESSION['nomCompte']);
 
 $infoCommande = Commande::GetOrdersByUserId($userInfo['idUtilisateur']);
 
+/**
+ * On windows servers, open your php.ini (which should be in Program Files/PHP), and simply uncomment the extension:
+ * extension=php_intl.dll
+ */
+//$nf = new NumberFormatter('ch_CH', NumberFormatter::CURRENCY);
+
+
 //Pour l'affichage, c-à-d w/o id and pwd
 $displayInfo = $userInfo;
 unset($displayInfo['idUtilisateur']);
 unset($displayInfo['mdp']);
 
-
-
+$prixTotal = 0;
 
 ?>
 
@@ -92,19 +98,20 @@ unset($displayInfo['mdp']);
                     <?php
                     if (!empty($userInfo)) {
                         foreach ($infoCommande as $key => $value) {
-                            $platsItems = json_decode($infoCommande[$key]['lstPlats']);
-                            //var_dump($platsItems);
+                            $platsItems = json_decode($infoCommande[$key]['lstPlats'], true);
                             echo "<tr>";
-                            echo "<td>" . $infoCommande[$key]['dateCommande'] . "</td>";
-                            echo "<td>" . $infoCommande[$key]['lstPlats'] . "</td>";
-                            // foreach ($platsItems as $key => $value) {
-                            //     echo "<td>" . $platsItems[$key]['plats'] . "</td>";
-                            // }
-
-                            // for($i = 0; $i < $platsItems; $i++){
-                            //     echo "<td>" . $platsItems[$i][$i] . "</td>";
-                            // }
+                            echo "<td style='text-align:center;' >" . $infoCommande[$key]['dateCommande'] . "</td>";
+                            echo "<td>";
+                            foreach ($platsItems as $p) {
+                                echo "Plat: " . $p['nomPlat'] . "<br/>Description: "  .  $p['descriptifPlat'] . "<br/>Prix unitaire: " .  $p['prixPlat'] . "<br/><br/>";
+                                $prixTotal += $p['prixPlat'];
+                            }
+                            echo "</td>";
+                            echo "<td>" . number_format($prixTotal, 2) . "</td>";
                             echo "</tr>";
+                            if (isset($prixTotal)) {
+                                $prixTotal = 0;
+                            }
                         }
                     }
                     ?>
