@@ -9,6 +9,8 @@ class Plat
     private $decriptifPlat;
     private $prixPlat;
 
+    // private $quantitePlat;
+
     #endregion
 
     #region Propriétés
@@ -93,7 +95,37 @@ class Plat
         return $this;
     }
 
+    // /**
+    //  * Get the value of quantitePlat
+    //  */
+    // public function getQuantitePlat()
+    // {
+    //     return $this->quantitePlat;
+    // }
+
+    // /**
+    //  * Set the value of quantitePlat
+    //  *
+    //  * @return  self
+    //  */
+    // public function setQuantitePlat($quantitePlat)
+    // {
+    //     $this->quantitePlat = $quantitePlat;
+
+    //     return $this;
+    // }
+
     #endregion
+
+    // public function __construct($unIdPlat, $unNomPlat, $unDecriptifPlat, $unPrixPlat, $uneQuantitePlat){
+
+    //     $this->setIdPlat($unIdPlat);
+    //     $this->setNomPlat($unNomPlat);
+    //     $this->setDecriptifPlat($unDecriptifPlat);
+    //     $this->setPrixPlat($unPrixPlat);
+    //     $this->setQuantitePlat($uneQuantitePlat);
+
+    // }
 
     #region Méthodes
 
@@ -112,6 +144,27 @@ class Plat
         return $resultFromReq;
         die();
     }
+
+
+    // /**
+    //  * 
+    //  *
+    //  * @param Plat $unPlat
+    //  * @return boolean
+    //  */
+    // public static function AddQuantiteAPlat(Plat $unPlat): bool{
+
+    //     $request = ConnexionPdo::getInstance()->prepare("INSERT INTO inclurequantite(quantitePlat, idPlat) VALUES (:quantitePlat, :idPlat)");
+
+    //     $quantitePlat = $unPlat->getQuantitePlat();
+    //     $idPlat = $unPlat->getIdPlat();
+
+    //     $request->bindParam(':quantitePlat', $quantitePlat);
+    //     $request->bindParam(':idPlat', $idPlat);
+
+    //     $insertionSuccessful = $request->execute();
+    //     return $insertionSuccessful;
+    // }
 
     #endregion
 }
