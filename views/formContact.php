@@ -1,29 +1,105 @@
 <?php
+ini_set('SMTP', "smtp.gmail.com");
+ini_set('smtp_port', "25");
+ini_set('sendmail_from', "baratie.info@gmail.com");
 
-$prenom = filter_input(INPUT_POST, 'prenom', FILTER_SANITIZE_STRING);
-$nom = filter_input(INPUT_POST, 'nom', FILTER_SANITIZE_STRING);
-$email = filter_input(INPUT_POST, 'prenom', FILTER_SANITIZE_EMAIL);
-$sujet = filter_input(INPUT_POST, 'sujet', FILTER_SANITIZE_STRING);
-$message = filter_input(INPUT_POST, 'message', FILTER_SANITIZE_STRING);
+/**
+ * Méthode qui envoie les données du formulaire à notre adresse mail
+ *
+ * @param string $email
+ * @param string $subject
+ * @param string $text
+ * @return void
+ */
+function EnvoiEmailAdmin($email, $subject, $text)
+{
+    $ourEmailAdress = ini_get('sendmail_from');
+
+    $destinataire = $email;
+    $subjectSend = $subject;
+    $textSend = $text;
+    $headers = "From: " . $destinataire . "\r\n";
+
+    mail($ourEmailAdress, $subjectSend, $textSend, $headers);
+}
+
+
+function EnvoiEmailUser($email, $subject)
+{
+    $ourEmailAdress = ini_get('sendmail_from');
+
+    $destinataire = $email;
+    $subjectSend = $subject;
+    $text = "Votre email a bien été reçu! Nous vous recontacterons dans les plus brefs délais";
+    $headers = "From: " . $ourEmailAdress . "\r\n";
+
+    mail($destinataire, $subjectSend, $text, $headers);
+}
+
+//REGEX validation
+$regexAlphabet = '/^[a-zA-Z ]*$/';
+$regexAlphaNumeric = '/[a-zA-Z0-9]+$/';
+$regexNumeric = '/^[0-9]+$/';
+$regexEmail = '/([\w\-]+\@[\w\-]+\.[\w\-]+)/';
+
+const NB_POST = 6;
+
+$preValidationUserValues = $_POST;
+$postValidationUserValues = array();
+
+unset($preValidationUserValues['envoyer']);
 
 $envoyer = filter_input(INPUT_POST, 'envoyer');
 
 //Script pour le formulaire de contact:
-
-
 if ($envoyer) {
 
-    if ($prenom != null && $nom != null && $email != null && $message != null && $message != null) {
+    if (count($_POST) == NB_POST) {
 
-        $content = "From: $prenom \n Email: $email \n Message: $message";
-        // $recipient =  /* admin email address */;
-        $mailheader = "From: $email \r\n";
-        mail($recipient, $sujet, $content, $mailheader); //or die("Une erreur est survenue");
-        echo "Email envoyé";
+        foreach ($preValidationUserValues as $key => $value) {
+
+            switch ($key) {
+
+                case 'prenomContact':
+                    if (preg_match($regexAlphabet, $_POST['prenomContact'])) {
+
+                        $fname = $_POST['prenomContact'];
+                        array_push($postValidationUserValues, $fname);
+                    }
+                    break;
+                case 'nomContact':
+                    if (preg_match($regexAlphabet, $_POST['nomContact'])) {
+
+                        $lname = $_POST['nomContact'];
+                        array_push($postValidationUserValues, $lname);
+                    }
+                    break;
+                case 'emailContact':
+                    if (preg_match($regexEmail, $_POST['emailContact'])) {
+
+                        $email = $_POST['emailContact'];
+                        array_push($postValidationUserValues, $email);
+                    }
+                    break;
+                case 'sujetContact':
+
+                    $sujet = $_POST['sujetContact'];
+                    array_push($postValidationUserValues, $sujet);
+
+                    break;
+                case 'messageContact':
+                    if (preg_match($regexAlphaNumeric, $_POST['messageContact'])) {
+
+                        $message = $_POST['messageContact'];
+                        array_push($postValidationUserValues, $message);
+                    }
+                    break;
+            }
+        }
+        EnvoiEmailAdmin($email, $sujet, $message);
+        EnvoiEmailUser($email, $sujet);
     }
 }
-
-
 
 ?>
 
@@ -38,7 +114,7 @@ if ($envoyer) {
 
         <!--Grid column-->
         <div class="col-md-9 mb-md-0 mb-5">
-            <form id="contact-form" name="contact-form" action="#" method="POST">
+            <form method="POST" action="#">
 
                 <!--Grid row-->
                 <div class="row">
@@ -52,7 +128,7 @@ if ($envoyer) {
                     <!--Grid column-->
                     <div class="col-md-6">
                         <div class="form-floating">
-                            <input type="text" name="prenom" class="form-control" id="floatingInput" placeholder="random">
+                            <input type="text" name="prenomContact" class="form-control" id="floatingInput" placeholder="random">
                             <label for="floatingInput">Votre prénom</label>
                         </div>
                     </div>
@@ -60,7 +136,7 @@ if ($envoyer) {
                     <!--Grid column-->
                     <div class="col-md-6">
                         <div class="form-floating">
-                            <input type="text" name="nom" class="form-control" id="floatingInput" placeholder="random">
+                            <input type="text" name="nomContact" class="form-control" id="floatingInput" placeholder="random">
                             <label for="floatingInput">Votre nom</label>
                         </div>
                     </div>
@@ -70,7 +146,7 @@ if ($envoyer) {
                     <!--Grid column-->
                     <div class="col-md-12">
                         <div class="form-floating">
-                            <input type="email" name="email" class="form-control" id="floatingInput" placeholder="random@hello.com">
+                            <input type="email" name="emailContact" class="form-control" id="floatingInput" placeholder="random@hello.com">
                             <label for="floatingInput">Votre email</label>
                         </div>
                     </div>
@@ -83,7 +159,7 @@ if ($envoyer) {
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-floating">
-                            <input type="text" name="sujet" class="form-control" id="floatingInput" placeholder="random.">
+                            <input type="text" name="sujetContact" class="form-control" id="floatingInput" placeholder="random.">
                             <label for="floatingInput">Sujet</label>
                         </div>
                     </div>
@@ -96,7 +172,7 @@ if ($envoyer) {
                     <!--Grid column-->
                     <div class="col-md-12">
                         <div class="form-floating">
-                            <textarea class="form-control" name="message "placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
+                            <textarea class="form-control" name="messageContact" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
                             <label for="floatingTextarea2">Votre Message</label>
                         </div>
                     </div>
