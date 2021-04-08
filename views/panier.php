@@ -3,6 +3,9 @@ include("./database/header.inc.php");
 include("./database/commande.php");
 include('./database/utilisateur.php');
 
+//Permet d'établir l'heure correcte de la commande
+date_default_timezone_set('CET');
+
 //$insertCart = $bdd->prepare("INSERT INTO commandes(plat, idUtilisateur) VALUES (?, ?)");
 $insertCart = new Commande();
 
@@ -32,7 +35,7 @@ if (!isset($_SESSION["panier"])) {
 
 if ($submit) {
 
-    foreach($_SESSION['panier'] as $plats){
+    foreach ($_SESSION['panier'] as $plats) {
         array_push($lstPlats, $plats);
     }
 
@@ -45,6 +48,8 @@ if ($submit) {
         $insertCart->setIdUtilisateur($userInfo["idUtilisateur"]);
     }
     Commande::Add($insertCart);
+
+    header("Location: ./index.php?action=panier&sup=true");
 }
 
 
@@ -77,31 +82,38 @@ if ($submit) {
                 <form action="#" method="POST">
                     <div class="formBorder">
                         <!-- Payer par paypal -->
-                        <button>Connecter paypal</button>
-                        <input type="submit" name="submit" value="Ok" placeholder="Etape suivante">
+                        <button class="btn btn-info">Connecter paypal</button>
+                        <input class="btn btn-success" type="submit" name="submit" value="Valider la commande" placeholder="Etape suivante">
+                        <a class="btn btn-danger" href="index.php?action=panier&sup=true">Vider le panier</a>
                     </div>
                 </form>
-                <a class="btn btn-danger" href="index.php?action=panier&sup=true">Vider le panier</a>
             <?php endif; ?>
             <?php
             // Show your cart
             if (empty($_SESSION['panier'])) {
                 echo "<div style='margin:auto; text-align:center; margin-top:40px;'>";
                 echo "<h2 class='display-5'>Votre panier est vide</h2>";
+                echo "<br/>";
                 echo "<a class='btn btn-info btn-lg' href='./index.php?action=menu' style='margin-top: 10px;'>Voir le menu</a>";
                 echo "</div>";
             } else {
-                echo "<div class='plat'>";
-                echo "<h2 class='display-1'>Votre panier</h2>";
-                foreach($_SESSION['panier'] as $key => $value){
-                    echo "<div>";
-                    echo "<h2>" . $_SESSION["panier"][$key]["nomPlat"] . "</h2>";
-                    echo "<p>" . $_SESSION["panier"][$key]["descriptifPlat"]. "</p>";
-                    echo "<p>" . $_SESSION["panier"][$key]["prixPlat"] . ".- </p>";
+                echo "<div style='text-align:center;'>";
+                echo "<br/>";
+                echo "<h2 class='display-4'>Votre panier</h2>";
+                echo "<br/>";
+                echo "<br/>";
+                foreach ($_SESSION['panier'] as $key => $value) {
+                    echo "<div class='plat'>";
+                    echo "<h2>Le nom du plat: " . $_SESSION["panier"][$key]["nomPlat"] . "</h2>";
+                    echo "<p>Description: " . $_SESSION["panier"][$key]["descriptifPlat"] . "</p>";
+                    echo "<p>Prix: " . $_SESSION["panier"][$key]["prixPlat"] . ".- </p>";
+                    echo "<p>Quantité: " . $_SESSION["panier"][$key]["quantitePlat"] . "x</p>";
                     echo "</div>";
                 }
                 echo "</div>";
             }
+
+            unset($_SESSION['quantitePlat']);
             ?>
         </div>
     </div>
