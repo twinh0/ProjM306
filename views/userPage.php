@@ -8,13 +8,6 @@ $userInfo = Utilisateur::SelectAllInfoFromUser($_SESSION['nomCompte']);
 
 $infoCommande = Commande::GetOrdersByUserId($userInfo['idUtilisateur']);
 
-/**
- * On windows servers, open your php.ini (which should be in Program Files/PHP), and simply uncomment the extension:
- * extension=php_intl.dll
- */
-//$nf = new NumberFormatter('ch_CH', NumberFormatter::CURRENCY);
-
-
 //Pour l'affichage, c-à-d w/o id and pwd
 $displayInfo = $userInfo;
 unset($displayInfo['idUtilisateur']);
@@ -49,6 +42,7 @@ $prixTotal = 0;
 
         <div>
             <p class="display-6">Les détails de votre compte:</p>
+            <br/>
             <table>
                 <?php
                 foreach ($displayInfo as $key => $value) {
@@ -103,8 +97,8 @@ $prixTotal = 0;
                             echo "<td style='text-align:center;' >" . $infoCommande[$key]['dateCommande'] . "</td>";
                             echo "<td>";
                             foreach ($platsItems as $p) {
-                                echo "Plat: " . $p['nomPlat'] . "<br/>Description: "  .  $p['descriptifPlat'] . "<br/>Prix unitaire: " .  $p['prixPlat'] . "<br/><br/>";
-                                $prixTotal += $p['prixPlat'];
+                                echo "Plat: " . $p['nomPlat'] . "<br/>Description: "  .  $p['descriptifPlat'] . "<br/>Prix unitaire: " .  $p['prixPlat'] . "<br/>Quantité: " . $p['quantitePlat'] . "x<br/><br/>";
+                                $prixTotal += $p['prixPlat'] * $p['quantitePlat'];
                             }
                             echo "</td>";
                             echo "<td>" . number_format($prixTotal, 2) . "</td>";
