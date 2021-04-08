@@ -4,7 +4,7 @@ ini_set('smtp_port', "25");
 ini_set('sendmail_from', "baratie.info@gmail.com");
 
 /**
- * Méthode qui envoie les données du formulaire à notre adresse mail
+ * Méthode qui envoie les données du formulaire à notre adresse email
  *
  * @param string $email
  * @param string $subject
@@ -23,7 +23,13 @@ function EnvoiEmailAdmin($email, $subject, $text)
     mail($ourEmailAdress, $subjectSend, $textSend, $headers);
 }
 
-
+/**
+ * Méthode qui envoie une confirmation de réception de la demande au client
+ *
+ * @param string $email
+ * @param string $subject
+ * @return void
+ */
 function EnvoiEmailUser($email, $subject)
 {
     $ourEmailAdress = ini_get('sendmail_from');
@@ -200,7 +206,7 @@ if ($envoyer) {
                 </li>
 
                 <li><i class="fas fa-envelope mt-4 fa-2x"></i>
-                    <p>contact@mdbootstrap.com</p>
+                    <p>baratie.info@gmail.com</p>
                 </li>
             </ul>
         </div>
