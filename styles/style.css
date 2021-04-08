@@ -15,6 +15,7 @@ body {
   }
 }
 
+
 #contactForm {
   font-size: larger;
   width: 800px;
@@ -127,11 +128,25 @@ body {
   font-size: 2em;
 }
 
-.plat a {
+.plat input{
+  margin: auto;
+  margin-bottom: 20px;
+
+}
+
+.checkIfButtonClicked{
+  /* text-align: center;
+  transition: 0.5s;
+  color: white;
+  text-decoration: none; */
+  pointer-events: none;
+}
+
+.quantityButtonClicked{
   text-align: center;
   transition: 0.5s;
   color: white;
-  text-decoration: none;
+  text-decoration: none;  
 }
 
 .plat a:hover {
@@ -140,10 +155,25 @@ body {
 }
 
 .formBorder {
-  padding-top: 10px;
-  background-color: green;
   margin: auto;
+  margin-top:20px;
+  border-radius: 100px;
+  height: 6vh;
+  padding-top: 10px;
+  background-color: #546e7a;
 }
+
+.formBorder a{
+  margin-right: 20px;
+  float: right;
+}
+
+.formBorder button{
+  margin-left: 20px;
+  margin-right: 10px;
+  float: left;
+}
+
 
 /* for js pwd validation */
 .valid {
