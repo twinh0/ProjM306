@@ -25,6 +25,10 @@ if ($sup == true) {
     if (isset($_SESSION["panier"])) {
         unset($_SESSION['panier']);
     }
+
+    if(isset($_SESSION['orderCounter'])){
+        unset($_SESSION['orderCounter']);
+    }
     header("Location: index.php?action=panier");
 }
 
@@ -34,6 +38,10 @@ if (!isset($_SESSION["panier"])) {
 }
 
 if ($submit) {
+
+    if(!isset($_SESSION['orderCounter'])){
+        $_SESSION['orderCounter'] = 0;
+    }
 
     foreach ($_SESSION['panier'] as $plats) {
         array_push($lstPlats, $plats);
@@ -48,6 +56,8 @@ if ($submit) {
         $insertCart->setIdUtilisateur($userInfo["idUtilisateur"]);
     }
     Commande::Add($insertCart);
+
+    $_SESSION['orderCounter']++;
 
     header("Location: ./index.php?action=panier&sup=true");
 }
