@@ -1,6 +1,18 @@
+/* Hide scrollbar for Chrome, Safari and Opera */
+body::-webkit-scrollbar {
+  display: none;
+}
+
 body {
   /* font-family: "Didot"; */
   margin-bottom: 50px;
+  overflow-y: scroll;
+
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+
+  background-size: cover;
 }
 
 .flex-container {
@@ -14,7 +26,6 @@ body {
     flex-direction: column;
   }
 }
-
 
 #contactForm {
   font-size: larger;
@@ -110,7 +121,8 @@ body {
 
 .plat {
   border-radius: 10px;
-  background-image: linear-gradient(to right top, #969da1, #d45f02);
+  /* background-image: linear-gradient(to right top, #969da1, #d45f02); */
+  background-color: transparent;
   height: auto;
   width: 70%;
   margin: auto;
@@ -120,7 +132,8 @@ body {
   padding: 10px 10px 10px 10px;
 }
 
-.plat h2, p {
+.plat h2,
+p {
   text-align: center;
 }
 
@@ -128,13 +141,12 @@ body {
   font-size: 2em;
 }
 
-.plat input{
+.plat input {
   margin: auto;
   margin-bottom: 20px;
-
 }
 
-.checkIfButtonClicked{
+.checkIfButtonClicked {
   /* text-align: center;
   transition: 0.5s;
   color: white;
@@ -142,11 +154,11 @@ body {
   pointer-events: none;
 }
 
-.quantityButtonClicked{
+.quantityButtonClicked {
   text-align: center;
   transition: 0.5s;
   color: white;
-  text-decoration: none;  
+  text-decoration: none;
 }
 
 .plat a:hover {
@@ -156,24 +168,23 @@ body {
 
 .formBorder {
   margin: auto;
-  margin-top:20px;
+  margin-top: 20px;
   border-radius: 100px;
   height: 6vh;
   padding-top: 10px;
   background-color: #546e7a;
 }
 
-.formBorder a{
+.formBorder a {
   margin-right: 20px;
   float: right;
 }
 
-.formBorder button{
+.formBorder button {
   margin-left: 20px;
   margin-right: 10px;
   float: left;
 }
-
 
 /* for js pwd validation */
 .valid {
