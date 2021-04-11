@@ -15,6 +15,8 @@ unset($displayInfo['mdp']);
 
 $prixTotal = 0;
 
+$amountHistory = array();
+
 ?>
 
 <!DOCTYPE html>
@@ -42,7 +44,7 @@ $prixTotal = 0;
 
         <div>
             <p class="display-6">Les détails de votre compte:</p>
-            <br/>
+            <br />
             <table>
                 <?php
                 foreach ($displayInfo as $key => $value) {
@@ -80,6 +82,8 @@ $prixTotal = 0;
             </table>
         </div>
         <div>
+            <p class="display-6">Historique des commandes:</p>
+            <br/>
             <table class="table table-striped table-bordered table-hover">
                 <thead style="text-align:center;">
                     <tr>
@@ -88,21 +92,24 @@ $prixTotal = 0;
                         <th>Prix Total</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody style="text-align:center; vertical-align:middle;">
                     <?php
                     if (!empty($userInfo)) {
                         foreach ($infoCommande as $key => $value) {
                             $platsItems = json_decode($infoCommande[$key]['lstPlats'], true);
                             echo "<tr>";
                             echo "<td style='text-align:center;' >" . $infoCommande[$key]['dateCommande'] . "</td>";
-                            echo "<td>";
+                            echo "<td style='height:10px; overflow:hidden;'>";
                             foreach ($platsItems as $p) {
                                 echo "Plat: " . $p['nomPlat'] . "<br/>Description: "  .  $p['descriptifPlat'] . "<br/>Prix unitaire: " .  $p['prixPlat'] . "<br/>Quantité: " . $p['quantitePlat'] . "x<br/><br/>";
                                 $prixTotal += $p['prixPlat'] * $p['quantitePlat'];
                             }
                             echo "</td>";
-                            echo "<td>" . number_format($prixTotal, 2) . "</td>";
+                            echo "<td class='display-6'>" . number_format($prixTotal, 2) . "</td>";
                             echo "</tr>";
+
+                            array_push($amountHistory, $prixTotal);
+
                             if (isset($prixTotal)) {
                                 $prixTotal = 0;
                             }
@@ -110,6 +117,23 @@ $prixTotal = 0;
                     }
                     ?>
                 </tbody>
+                <tfoot style="text-align:center; vertical-align:middle;">
+                    <tr>
+                        <td colspan="2" style="font-size:large;">Total:</td>
+                        <td class='display-6'>
+                            <?php
+                            $total = 0;
+
+                            foreach ($amountHistory as $prix) {
+                                $total += $prix;
+                            }
+                            echo "<b>" . number_format($total, 2) . " CHF</b>";
+
+
+                            ?>
+                        </td>
+                    </tr>
+                </tfoot>
             </table>
         </div>
     </div>
