@@ -1,13 +1,13 @@
 <?php
-
 include_once("./database/header.inc.php");
 require_once('./database/plat.php');
 
+if (isset($_SESSION['idPlats'])) {
+    empty($_SESSION['idPlats']);
+}
+
 // $selectMenus = $bdd->query("SELECT * FROM plats");
 $selectMenus = Plat::SelectAll();
-
-// Id of the item added to the cart
-$ajouterPanier = filter_input(INPUT_GET, 'ajouter', FILTER_SANITIZE_STRING);
 
 //Bouton pour valider la quantité de plat
 $validerQuantite = filter_input(INPUT_POST, 'validerQuantite');
@@ -34,7 +34,7 @@ $keysForBasket = array("nomPlat", "descriptifPlat", "prixPlat", "quantitePlat");
     <style>
         body {
             height: 100vh;
-            background-image: linear-gradient(to right top, #da9eff, #2984b5);
+            background-image: url("./ressources/kitchen.jpg");
         }
     </style>
     <div class="navigation">
@@ -43,58 +43,127 @@ $keysForBasket = array("nomPlat", "descriptifPlat", "prixPlat", "quantitePlat");
         ?>
         <div id="affichage">
             <div id="texte">
-                <?php
-                // Show the menu
-                foreach ($selectMenus as $s) {
-                    echo "<form method='POST' action='#'>";
-                    echo "<div class='plat'>";
-                    echo "<h2>" . $s["nomPlat"] . "</h2>";
-                    echo "<p>" . $s["descriptifPlat"] . "</p>";
-                    echo "<p class=\"prix\">" . $s["prixPlat"] . " CHF</p>";
-                    if (isset($_SESSION['isLoggedIn']) && $_SESSION['isLoggedIn'] == true) {
-                        echo "<input style='width:auto;' type='number' class='form-control' name='quantitePlat' value=" . $_SESSION['quantitePlat'] .  " min='1' max='10'/>";
-                        echo "<input style='width:auto; margin:auto;' name='validerQuantite' class='form-control btn-info' type='submit' value='Valider la quantité'/>";
+                <style>
+                    .dish {
+                        margin-top: 5vh;
                     }
-                    echo "<br/>";
-                    echo "<p>";
-                    if (isset($_SESSION['isLoggedIn']) && $_SESSION['isLoggedIn'] == true) {
-                        echo "<a class='btn btn-success' href=\"index.php?action=menu&ajouter=" . $s["idPlats"] . "\">Ajouter au panier</a>";
-                    } else {
-                        echo "<a class='btn btn-success' href=\"index.php?action=connexion&accountExists=false\">Ajouter au panier</a>";
-                    }
-                    echo "</p>";
 
-                    if (isset($validerQuantite)) {
-                        if ($_POST['quantitePlat'] >= 1 && $_POST['quantitePlat'] <= 10) {
-                            $quantiteDuPlat = $_POST['quantitePlat'];
+                    .card-img-top {
+                        opacity: 100%;
+                        border-radius: 50%;
+                        padding: 5% 5% 0 5%;
+                    }
+
+                    .card-text {
+                        text-align: left;
+                    }
+
+                    .prix {
+                        margin: auto;
+                        text-align: center;
+                    }
+
+                    .prix p {
+                        margin-right: 20%;
+                        margin-left: 5%;
+                    }
+
+                    .prix a{
+                        margin-left: 20%;
+                        margin-right: 5%;;
+                    }
+                    .modal-body {
+                        margin: auto;
+                    }
+                </style>
+                <div class="dish">
+                    <?php
+                    // Show the menu
+                    foreach ($selectMenus as $s) {
+                        echo "<form method='POST' action='#'>";
+                        echo "<div class='card bg-dark text-light' style='margin:auto; margin-left:20vw; margin-right:20vw;'>";
+                        switch ($s['nomPlat']) {
+                            case "Pizza":
+                                echo "<img src='./ressources/pizzaMenu.jpg' class='card-img-top' alt='...'>";
+                                break;
+                            case "Poulet":
+                                echo "<img src='./ressources/tandoori.jpg' class='card-img-top' alt='...'>";
+                            default:
+                                break;
                         }
-                        $_SESSION['quantitePlat'] = $quantiteDuPlat;
-                    }
+                        echo "<div class='card-body'>";
+                        echo "<h1 style='text-align:center;' class='card-title display-4'><b>" . $s["nomPlat"] . "</b></h1>";
+                        echo "<p class='card-text'>Porta lorem mollis aliquam ut porttitor leo a diam sollicitudin tempor id eu nisl nunc mi ipsum faucibus vitae aliquet nec ullamcorper sit amet risus nullam eget felis eget nunc lobortis mattis aliquam faucibus purus in massa tempor nec feugiat nisl pretium fusce id velit ut tortor pretium viverra suspendisse</p>";
 
-                    if (!isset($_SESSION["panier"])) {
-                        $_SESSION["panier"] = array();
-                    }
+                        // Pour l'affichage de la description du plat stockée dans la bdd
+                        // echo "<p class='card-text'>" . $s["descriptifPlat"] . "</p>";
 
-                    if ($ajouterPanier == $s["idPlats"]) {
-
-                        if (isset($_SESSION['quantitePlat'])) {
-
-                            unset($s['idPlats']);
-                            $tableauPlat = array();
-                            $tableauPlat = $s;
-                            $tableauPlat['quantitePlat'] = $_SESSION['quantitePlat'];
-
-                            array_push($_SESSION["panier"], array_combine($keysForBasket, $tableauPlat));
-                            $_SESSION['quantitePlat'] = 0;
+                        //echo "<p class=\"prix\">" . $s["prixPlat"] . " CHF</p>";
+                        echo "<br/>";
+                        echo "<p>";
+                        if (isset($_SESSION['isLoggedIn']) && $_SESSION['isLoggedIn'] == true) {
+                            $_SESSION['idPlats'] = $s['idPlats'];
+                            // Modal trigger
+                            echo "<p class=\"prix\">" . $s["prixPlat"] . " CHF<a class='btn btn-outline-light btn-lg' value='" . $_SESSION['idPlats'] . "' data-bs-toggle='modal' data-bs-target='#exampleModal'>Ajouter au panier</a></p>";
+                            // Bootstrap Modal
+                            echo "<div class='modal fade text-dark' id='exampleModal' tabindex='-1' aria-labelledby='exampleModalLabel' aria-hidden='true'>";
+                            echo "<div class='modal-dialog'>";
+                            echo "<div class='modal-content'>";
+                            echo "<div class='modal-header'>";
+                            echo "<h5 class='modal-title' id='exampleModalLabel'>Veuillez confirmer la quantité</h5>";
+                            echo "<button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>";
+                            echo "</div>";
+                            echo "<div class='modal-body list-inline'>";
+                            echo "<p class='list-inline-item'>Quantité: </p>" . "<input class='list-inline-item' style='width:auto; text-align:center;' type='number' id='quantitySelector' class='form-control' name='quantitePlat' value=" . $_SESSION['quantitePlat'] .  " min='1' max='10'/>";
+                            echo "</div>";
+                            echo "<div class='modal-footer'>";
+                            echo "<button type='button' class='btn btn-danger' data-bs-dismiss='modal'>Fermer</button>";
+                            echo "<input type='submit' name='validerQuantite' class='btn btn-success' type='submit' value='Valider la quantité'/>";
+                            echo "</div>";
+                            echo "</div>";
+                            echo "</div>";
+                            echo "</div>";
                         } else {
-                            
-                            echo "<p class='alert alert-danger'>Veuillez séléctionner une quantité!</p>";
+                            echo "<a class='btn btn-outline-light btn-lg' href=\"index.php?action=connexion&accountExists=false\">Ajouter au panier</a>";
                         }
+                        echo "</p>";
+                        echo "</div>";
+
+                        if (isset($validerQuantite)) {
+                            if ($_POST['quantitePlat'] >= 1 && $_POST['quantitePlat'] <= 10) {
+                                $quantiteDuPlat = $_POST['quantitePlat'];
+                            }
+                            $_SESSION['quantitePlat'] = $quantiteDuPlat;
+
+                            if (!isset($_SESSION["panier"])) {
+                                $_SESSION["panier"] = array();
+                            }
+
+                            if ($_SESSION['idPlats'] == $s["idPlats"]) {
+
+                                if ($_SESSION['quantitePlat'] != 0) {
+
+                                    unset($s['idPlats']);
+                                    $tableauPlat = array();
+                                    $tableauPlat = $s;
+                                    $tableauPlat['quantitePlat'] = $_SESSION['quantitePlat'];
+
+                                    array_push($_SESSION["panier"], array_combine($keysForBasket, $tableauPlat));
+                                    //$_SESSION['quantitePlat'] = 0;
+                                } else {
+                                    //echo "<p class='alert alert-danger'>Veuillez séléctionner une quantité!</p>";
+                                }
+                            }
+                        }
+
+                        echo "</div>";
+                        echo "</form>";
+                        echo "<br/>";
+                        echo "<br/>";
+                        unset($validerQuantite);
                     }
-                    echo "</div>";
-                    echo "</form>";
-                }
-                ?>
+                    ?>
+                </div>
             </div>
         </div>
     </div>
