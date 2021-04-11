@@ -2,12 +2,12 @@
 session_start();
 
 
-if(isset($_GET['sup'])){
+if (isset($_GET['sup'])) {
     unset($_SESSION['panier']);
 }
 
 if (!isset($_SESSION['quantitePlat'])) {
-    $_SESSION['quantitePlat'] = 1;
+    $_SESSION['quantitePlat'] = 0;
 }
 ?>
 <style>
@@ -17,7 +17,7 @@ if (!isset($_SESSION['quantitePlat'])) {
 <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="./index.php?action=accueil">
-            <img src="./ressources/logoBaratie.png" alt="logo" width="100" height="100" class="d-inline-block align-top">  
+            <img src="./ressources/roundLogoLS.png" alt="logo" width="100" height="100" class="d-inline-block align-top">
             <div style="display: inline; font-size: 3em; font-family: 'Dancing Script', cursive;"><i>Baratie</i></div>
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
