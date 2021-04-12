@@ -92,7 +92,7 @@ if ($submit) {
                 <form action="#" method="POST">
                     <div class="formBorder">
                         <!-- Payer par paypal -->
-                        <button class="btn btn-info">Connecter paypal</button>
+                        <!-- <button class="btn btn-info">Connecter paypal</button> -->
                         <input class="btn btn-success" type="submit" name="submit" value="Valider la commande" placeholder="Etape suivante">
                         <a class="btn btn-danger" href="index.php?action=panier&sup=true">Vider le panier</a>
                     </div>
@@ -107,19 +107,28 @@ if ($submit) {
                 echo "<a class='btn btn-info btn-lg' href='./index.php?action=menu' style='margin-top: 10px;'>Voir le menu</a>";
                 echo "</div>";
             } else {
-                echo "<div style='text-align:center;'>";
+                echo "<div style='text-align:center; align-items:center;'>";
                 echo "<br/>";
                 echo "<h2 class='display-4'>Votre panier</h2>";
                 echo "<br/>";
                 echo "<br/>";
+                echo "<ul class='list-group mb-3' style='margin:auto;'>";
                 foreach ($_SESSION['panier'] as $key => $value) {
-                    echo "<div class='plat'>";
-                    echo "<h2>Le nom du plat: " . $_SESSION["panier"][$key]["nomPlat"] . "</h2>";
-                    echo "<p>Description: " . $_SESSION["panier"][$key]["descriptifPlat"] . "</p>";
-                    echo "<p>Prix: " . $_SESSION["panier"][$key]["prixPlat"] . ".- </p>";
-                    echo "<p>Quantité: " . $_SESSION["panier"][$key]["quantitePlat"] . "x</p>";
+                    echo "<li style='margin: auto;text-align:left; max-width:1296.01px; max-height:101.53px;' class='list-group-item d-flex justify-content-between lh-sm'>";
+                    echo "<div>";
+                    echo "<h5 class='my-0'>" . $_SESSION["panier"][$key]["nomPlat"] . "</h5>";
+                    echo "<small class='text-muted'>Porta lorem mollis aliquam ut porttitor leo a diam sollicitudin tempor id eu nisl nunc mi ipsum</small>";
+                    echo "<br/>";
+                    echo "<br/>";
+                    echo "<small class='text-muted'>Quantité: " . $_SESSION["panier"][$key]["quantitePlat"] . "x</small>";
                     echo "</div>";
+                    $prix = number_format($_SESSION["panier"][$key]["quantitePlat"] * $_SESSION["panier"][$key]["prixPlat"], 2);
+                    echo "<span class='text-muted'>" . $prix . " CHF</span>";
+                    echo "</div>";
+                    echo "</li>";
+                    echo "<br/>";
                 }
+                echo "</ul>";
                 echo "</div>";
             }
 
