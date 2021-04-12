@@ -145,6 +145,17 @@ class Plat
         die();
     }
 
+    public static function GetPlatById(int $idPlat): array{
+        $request = ConnexionPdo::getInstance()->prepare("SELECT * FROM plats WHERE idPlats = :idPlats");
+        $request->bindParam(":idPlats", $idPlat, PDO::PARAM_INT);
+        $request->setFetchMode(PDO::FETCH_ASSOC);
+        $request->execute();
+        
+        $resultFromReq = $request->fetch();
+        return $resultFromReq;
+        die();
+    }
+
 
     // /**
     //  * 
