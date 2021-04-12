@@ -31,12 +31,6 @@ $validatedVarsArray = array();
 
 /**
  * Affichage du formulaire d'inscription ou connexion en fonction de la valeur de $accountExists
- * 
- * filter_input($type, $variable_name, $filter)
- * 
- * @param $type -> INPUT_POST, INPUT_GET, etc...
- * @param $variable_name -> Value of the name attribute from the selected DOM element
- * @param $filter -> The ID of the filter to apply 
  */
 $accountExists = filter_input(INPUT_GET, 'accountExists', FILTER_SANITIZE_STRING);
 
@@ -102,14 +96,14 @@ if ($seConnecter) {
                     if (password_verify($preHash, $userMdp['mdp'])) {
 
                         $_SESSION['isLoggedIn'] = true;
+                        // Issue with header() -> NEEDS RESOLVING ASAP
+                        // header('Location: ./');
+                        $URL = "./";
+                        echo "<script type='text/javascript'>document.location.href='{$URL}';</script>";
+                        echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
                     }
                 } else {
                     $_SESSION['isLoggedIn'] = false;
-                }
-
-                if (isset($_SESSION['isLoggedIn']) && $_SESSION['isLoggedIn'] == true) {
-                    header('Location: ./index.php?action=accueil');
-                } else {
                     echo '<div class="container-fluid d-flex justify-content-center align-items-center h-100">';
                     echo '<div id="errorOutput" class="alert alert-danger alert-dismissible fade show" role="alert">';
                     echo "Votre nom d'utilisateur ou votre mot de passe sont erronés";
@@ -117,6 +111,10 @@ if ($seConnecter) {
                     echo '</div>';
                     echo '</div>';
                 }
+
+                // if (isset($_SESSION['isLoggedIn']) && $_SESSION['isLoggedIn'] == true) {
+                // } else {
+                // }
             }
         } catch (PDOException $e) {
             echo "Error: " . $e->getMessage();
@@ -209,7 +207,12 @@ if ($creerCompte) {
 
                 $_SESSION['isLoggedIn'] = true;
 
-                header('Location: ./index.php?action=accountCreated');
+                // Issue with header() -> NEEDS RESOLVING ASAP
+                // header('Location: ./index.php?action=accountCreated');
+                $URL = "./index.php?action=accountCreated";
+                echo "<script type='text/javascript'>document.location.href='{$URL}';</script>";
+                echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
+
             } else {
                 echo '<div class="container-fluid d-flex justify-content-center align-items-center h-100">';
                 echo '<div id="errorOutput" class="alert alert-danger alert-dismissible fade show" role="alert">';
@@ -240,7 +243,7 @@ if ($creerCompte) {
                     <p class="display-6">Je possède un compte</p>
                     <div class="mt-3 px-3"> <input type="text" name="usernameLogin" class="form-control" placeholder="Nom d'utilisateur" required> </div>
                     <div class="mt-3 px-3"> <input type="password" name="mdpLogin" placeholder="Votre mot de passe" class="form-control" required /> </div>
-                    <div class="mt-3 d-grid px-3"> <input type="submit" name="seConnecter" value="Se connecter" class="btn btn-primary btn-block btn-signup text-uppercase" />
+                    <div class="mt-3 d-grid px-3"> <input type="submit" name="seConnecter" value="Se connecter" class="btn btn-primary btn-block btn-signup text-uppercase" /> </div>
                 </form>
             </div>
         </div>
