@@ -15,6 +15,7 @@ body {
   background-size: cover;
 }
 
+
 .flex-container {
   display: flex;
   justify-content: center;
@@ -170,9 +171,12 @@ p {
   margin: auto;
   margin-top: 20px;
   border-radius: 100px;
-  height: 6vh;
+  height: 5.5vh;
   padding-top: 10px;
   background-color: #546e7a;
+}
+.formBorder input{
+  margin-left:20px;
 }
 
 .formBorder a {
