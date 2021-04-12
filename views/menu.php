@@ -3,7 +3,7 @@ include_once("./database/header.inc.php");
 require_once('./database/plat.php');
 
 if (isset($_SESSION['idPlats'])) {
-    empty($_SESSION['idPlats']);
+    unset($_SESSION['idPlats']);
 }
 
 // $selectMenus = $bdd->query("SELECT * FROM plats");
@@ -11,6 +11,11 @@ $selectMenus = Plat::SelectAll();
 
 //Bouton pour valider la quantité de plat
 $validerQuantite = filter_input(INPUT_POST, 'validerQuantite');
+
+$test = filter_input(INPUT_POST, 'idPlat');
+
+// Id of the item added to the cart
+$ajouterPanier = filter_input(INPUT_GET, 'ajouter', FILTER_SANITIZE_STRING);
 
 //Clé pour chaque élément du tableau qui représentera la panier de l'utilisateur
 $keysForBasket = array("nomPlat", "descriptifPlat", "prixPlat", "quantitePlat");
@@ -83,11 +88,11 @@ $keysForBasket = array("nomPlat", "descriptifPlat", "prixPlat", "quantitePlat");
                         echo "<form method='POST' action='#'>";
                         echo "<div class='card bg-dark text-light' style='margin:auto; margin-left:20vw; margin-right:20vw;'>";
                         switch ($s['nomPlat']) {
-                            case "Pizza":
-                                echo "<img src='./ressources/pizzaMenu.jpg' class='card-img-top' alt='...'>";
-                                break;
-                            case "Poulet":
+                            case "Poulet Tandoori":
                                 echo "<img src='./ressources/tandoori.jpg' class='card-img-top' alt='...'>";
+                                break;
+                            case "Pizza Pepperoni":
+                                echo "<img src='./ressources/pizzaMenu.jpg' class='card-img-top' alt='...'>";
                             default:
                                 break;
                         }
@@ -102,10 +107,11 @@ $keysForBasket = array("nomPlat", "descriptifPlat", "prixPlat", "quantitePlat");
                         echo "<br/>";
                         echo "<p>";
                         if (isset($_SESSION['isLoggedIn']) && $_SESSION['isLoggedIn'] == true) {
-                            $_SESSION['idPlats'] = $s['idPlats'];
                             // Modal trigger
-                            echo "<p class=\"prix\">" . $s["prixPlat"] . " CHF<a class='btn btn-outline-light btn-lg' value='" . $_SESSION['idPlats'] . "' data-bs-toggle='modal' data-bs-target='#exampleModal'>Ajouter au panier</a></p>";
-                            // Bootstrap Modal
+                            //$_SESSION['idPlats'] = $s['idPlats'];
+                            echo "<p class=\"prix\">" . $s["prixPlat"] . " CHF<a class='btn btn-outline-light btn-lg' data-bs-toggle='modal' name='idPlat' data-bs-target='#exampleModal' value='" . $_SESSION['idPlats'] = $s['idPlats'] . "'>Ajouter au panier</a></p>";
+                            $idPlats = rtrim($_SESSION['idPlats'], "'>Ajouter au panier</a></p>");
+                            $_SESSION['idPlats'] = $idPlats;
                             echo "<div class='modal fade text-dark' id='exampleModal' tabindex='-1' aria-labelledby='exampleModalLabel' aria-hidden='true'>";
                             echo "<div class='modal-dialog'>";
                             echo "<div class='modal-content'>";
@@ -118,6 +124,7 @@ $keysForBasket = array("nomPlat", "descriptifPlat", "prixPlat", "quantitePlat");
                             echo "</div>";
                             echo "<div class='modal-footer'>";
                             echo "<button type='button' class='btn btn-danger' data-bs-dismiss='modal'>Fermer</button>";
+                            // echo "<input type'hidden' name='idPlat' value='" . $_SESSION['idPlats'] ."' />";
                             echo "<input type='submit' name='validerQuantite' class='btn btn-success' type='submit' value='Valider la quantité'/>";
                             echo "</div>";
                             echo "</div>";
@@ -139,13 +146,15 @@ $keysForBasket = array("nomPlat", "descriptifPlat", "prixPlat", "quantitePlat");
                                 $_SESSION["panier"] = array();
                             }
 
-                            if ($_SESSION['idPlats'] == $s["idPlats"]) {
+                            if (isset($_SESSION['idPlats'])) {
+
+                                $getPlat = Plat::GetPlatById($_SESSION['idPlats']);
 
                                 if ($_SESSION['quantitePlat'] != 0) {
 
-                                    unset($s['idPlats']);
+                                    unset($getPlat['idPlats']);
                                     $tableauPlat = array();
-                                    $tableauPlat = $s;
+                                    $tableauPlat = $getPlat;
                                     $tableauPlat['quantitePlat'] = $_SESSION['quantitePlat'];
 
                                     array_push($_SESSION["panier"], array_combine($keysForBasket, $tableauPlat));
@@ -160,6 +169,9 @@ $keysForBasket = array("nomPlat", "descriptifPlat", "prixPlat", "quantitePlat");
                         echo "</form>";
                         echo "<br/>";
                         echo "<br/>";
+                        // unset($_SESSION['idPlats']);
+                        unset($_SESSION['idPlats']);
+                        unset($idPlats);
                         unset($validerQuantite);
                     }
                     ?>
