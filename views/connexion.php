@@ -38,9 +38,9 @@
         include "form.php";
         ?>
     </div>
-    
+
     <script type="text/javascript">
-        $(document).ready(function(){
+        $(document).ready(function() {
             $("#pwdRules").hide();
         });
     </script>
