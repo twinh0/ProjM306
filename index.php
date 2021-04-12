@@ -15,6 +15,7 @@ session_start([
 ]);
 $id_session = session_id();
 
+
 // $urlProj = $_SERVER['REQUEST_URI'];
 // $tabPages = array($urlProj, $urlProj . ACCUEIL, $urlProj . MENU, $urlProj . CONNEXION, $urlProj . PANIER, $urlProj . ERROR);
 
